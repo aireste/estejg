@@ -75,12 +75,12 @@ export default function AboutSection() {
               sequences, SEO. That hands-on B2B pipeline experience is what
               led me to build{" "}
               <a href="https://spctr.run" target="_blank" rel="noopener noreferrer" className="text-fg font-medium link-underline">SPCTR</a>.
-              I'm not a salesperson — but I understand exactly how B2B buyers
+              I&apos;m not a salesperson — but I understand exactly how B2B buyers
               move, and I build products that account for it.
             </p>
 
             <p className="text-fg-soft text-base md:text-lg leading-relaxed">
-              Outside of work I'm into Bitcoin, blockchain, and AI — anything
+              Outside of work I&apos;m into Bitcoin, blockchain, and AI — anything
               that rewrites how things work. Most of what I build starts as a
               problem I ran into myself.
             </p>
@@ -110,7 +110,7 @@ export default function AboutSection() {
             {/* skill tags — two groups */}
             <div className="pt-8 space-y-4">
               <div>
-                <div className="eyebrow-muted mb-3">// Marketing & data</div>
+                <div className="eyebrow-muted mb-3">Marketing &amp; data</div>
                 <div className="flex flex-wrap gap-2">
                   {["HubSpot", "Power BI", "Tableau", "RStudio", "Excel", "SEO / AEO", "MySQL"].map((skill) => (
                     <span key={skill} className="tag tag-amber">{skill}</span>
@@ -118,7 +118,7 @@ export default function AboutSection() {
                 </div>
               </div>
               <div>
-                <div className="eyebrow-muted mb-3">// Build stack</div>
+                <div className="eyebrow-muted mb-3">Build stack</div>
                 <div className="flex flex-wrap gap-2">
                   {["Next.js", "TypeScript", "React", "Tailwind", "Three.js", "Claude", "Vercel", "Figma"].map((skill) => (
                     <span key={skill} className="tag">{skill}</span>

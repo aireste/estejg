@@ -14,7 +14,7 @@ export default function HeroSection() {
 <div className="container-x relative z-10">
         {/* greeting */}
         <p className="text-2xl md:text-3xl font-medium text-fg-soft mb-4 fade-up" style={{ animationDelay: "0.2s" }}>
-          Hello, I'm <span className="text-fg font-semibold">Esteban</span>.
+          Hello, I&apos;m <span className="text-fg font-semibold">Esteban</span>.
         </p>
 
         {/* main headline */}
@@ -47,8 +47,8 @@ export default function HeroSection() {
         {/* subline */}
         <p className="max-w-xl text-base md:text-lg text-fg-soft leading-relaxed mb-10 fade-up" style={{ animationDelay: "0.4s" }}>
           Frontend builder with a background in marketing analytics and B2B.
-          Most devs don't know what a conversion funnel is. Most marketers
-          can't ship code. I do both.
+          Most devs don&apos;t know what a conversion funnel is. Most marketers
+          can&apos;t ship code. I do both.
         </p>
 
         {/* CTAs */}

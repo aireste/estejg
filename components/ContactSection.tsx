@@ -33,12 +33,12 @@ export default function ContactSection() {
           <h2 className="font-display font-bold text-[clamp(2.5rem,9vw,7rem)] leading-[0.95] tracking-tight mb-10">
             Got an idea<span className="amber-text">?</span>
             <br />
-            <span className="font-medium opacity-80">Let's build it.</span>
+            <span className="font-medium opacity-80">Let&apos;s build it.</span>
           </h2>
 
           <p className="text-base md:text-lg text-bg/70 max-w-xl mb-12 leading-relaxed">
-            Whether it's a full lead-gen system, a one-off site, or a wild
-            idea you can't shake — drop me a line. I read everything, and I
+            Whether it&apos;s a full lead-gen system, a one-off site, or a wild
+            idea you can&apos;t shake — drop me a line. I read everything, and I
             reply fast.
           </p>
 
