@@ -9,8 +9,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        bg: "var(--bg)",
+        "bg-soft": "var(--bg-soft)",
+        fg: "var(--fg)",
+        "fg-soft": "var(--fg-soft)",
+        muted: "var(--muted)",
+        amber: "var(--amber)",
+        "amber-bright": "var(--amber-bright)",
+        "amber-tint": "var(--amber-tint)",
+        border: "var(--border)",
+      },
+      fontFamily: {
+        display: ["Satoshi", "sans-serif"],
+        sans: ["Satoshi", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
       },
     },
   },
