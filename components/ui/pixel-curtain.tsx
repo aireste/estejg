@@ -74,19 +74,19 @@ export function PixelCurtain({ onDone }: { onDone?: () => void }) {
         gridTemplateRows: `repeat(${ROWS}, 1fr)`,
       }}
     >
-      {Array.from({ length: ROWS }, (_, y) =>
-        Array.from({ length: COLS }, (_, x) => {
-          const delay = delays[y][x];
-          const start = HOLD_FRAMES + delay;
-          const opacity = clamp01(1 - (frame - start) / CELL_FADE);
-          return (
-            <div
-              key={`${x}-${y}`}
-              style={{ backgroundColor: "var(--bg)", opacity }}
-            />
-          );
-        })
-      )}
+      {Array.from({ length: ROWS * COLS }, (_, i) => {
+        const x = i % COLS;
+        const y = Math.floor(i / COLS);
+        const delay = delays[y][x];
+        const start = HOLD_FRAMES + delay;
+        const opacity = clamp01(1 - (frame - start) / CELL_FADE);
+        return (
+          <div
+            key={i}
+            style={{ backgroundColor: "var(--bg)", opacity }}
+          />
+        );
+      })}
     </div>
   );
 }
