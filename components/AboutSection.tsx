@@ -84,28 +84,6 @@ export default function AboutSection() {
               problem I ran into myself.
             </p>
 
-            {/* stats grid */}
-            <div className="grid grid-cols-3 gap-4 pt-6">
-              <div className="border-t border-[rgba(10,10,10,0.15)] pt-4">
-                <div className="font-display font-bold text-3xl md:text-4xl">
-                  3<span className="amber-text">yrs</span>
-                </div>
-                <div className="eyebrow-muted mt-1">Industry exp.</div>
-              </div>
-              <div className="border-t border-[rgba(10,10,10,0.15)] pt-4">
-                <div className="font-display font-bold text-3xl md:text-4xl">
-                  20<span className="amber-text">+</span>
-                </div>
-                <div className="eyebrow-muted mt-1">Stakeholders interviewed</div>
-              </div>
-              <div className="border-t border-[rgba(10,10,10,0.15)] pt-4">
-                <div className="font-display font-bold text-3xl md:text-4xl">
-                  ∞
-                </div>
-                <div className="eyebrow-muted mt-1">Ideas / week</div>
-              </div>
-            </div>
-
             {/* skill tags — two groups */}
             <div className="pt-8 space-y-4">
               <div>
