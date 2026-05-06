@@ -58,7 +58,7 @@ export default function HeroSection() {
             <span className="btn-arrow">→</span>
           </a>
           <a href="#contact" className="btn-secondary">
-            Get in touch
+            Let&apos;s talk!
           </a>
         </div>
 

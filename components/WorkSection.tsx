@@ -19,7 +19,7 @@ const projects: Project[] = [
     name: "SPCTR",
     tagline: "Lead-gen, weaponized.",
     description:
-      "A lead-generation agency for B2B teams. Tactical dark site with a Three.js globe, custom design system, and a contact pipeline that actually converts. Built end-to-end, deployed on Vercel.",
+      "SPCTR helps B2B teams stop chasing cold leads and start closing warm ones. I founded and built it end-to-end — from the brand and site to the outreach systems and lead pipeline behind it. If your sales team is wasting time on dead-end outreach, this is the fix.",
     url: "https://spctr.run",
     status: "live",
     year: "2025",
@@ -38,7 +38,6 @@ export default function WorkSection() {
         {/* section header */}
         <div className="flex items-end justify-between mb-16 md:mb-20">
           <div>
-            <div className="eyebrow mb-3">/ 02 — Work</div>
             <h2 className="font-display font-bold text-5xl md:text-7xl tracking-tight leading-[0.95]">
               Selected
               <br />
@@ -62,7 +61,7 @@ export default function WorkSection() {
           {/* "more soon" placeholder card */}
           <div className="group relative border border-dashed border-[rgba(10,10,10,0.2)] p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 hover:border-amber transition-colors">
             <div>
-              <div className="eyebrow-muted mb-2">/ 02</div>
+
               <div className="font-display font-bold text-2xl md:text-3xl">
                 More projects in the pipeline<span className="amber-text">_</span>
               </div>
@@ -109,17 +108,9 @@ function ProjectCard({ num, name, tagline, description, url, status, year, role,
               {num}
             </div>
           </div>
-          <div className="mt-6 space-y-3">
-            <div>
-              <div className="eyebrow-muted mb-1">Year</div>
-              <div className="font-mono text-sm">{year}</div>
-            </div>
-            <div>
-              <div className="eyebrow-muted mb-1">Status</div>
-              <div className={`font-mono text-xs tracking-[0.14em] ${statusColor}`}>
-                {statusLabel}
-              </div>
-            </div>
+          <div className="mt-6">
+            <div className="eyebrow-muted mb-1">Year</div>
+            <div className="font-mono text-sm">{year}</div>
           </div>
         </div>
 
@@ -159,16 +150,8 @@ function ProjectCard({ num, name, tagline, description, url, status, year, role,
             </div>
           </div>
 
-          {/* mini ascii-style visual */}
-          <div className="mt-6 font-mono text-[10px] leading-tight text-amber/70 select-none">
-            <div>┌─────────────┐</div>
-            <div>│  ▓▓▓▓░░░░░  │</div>
-            <div>│  ░▓▓▓▓░░░░  │</div>
-            <div>│  ░░▓▓▓▓░░░  │</div>
-            <div>└─────────────┘</div>
-          </div>
 
-          <div className="mt-6 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-fg group-hover:text-amber transition-colors">
+<div className="mt-6 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-fg group-hover:text-amber transition-colors">
             View
             <span className="group-hover:translate-x-1 transition-transform">→</span>
           </div>

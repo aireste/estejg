@@ -32,6 +32,14 @@ export default function Nav() {
           <a href="#contact" className="font-mono text-xs uppercase tracking-[0.14em] hover:text-amber transition-colors link-underline">
             Contact
           </a>
+          <a
+            href="https://github.com/aireste"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-xs uppercase tracking-[0.14em] hover:text-amber transition-colors link-underline"
+          >
+            GitHub
+          </a>
         </div>
 
 
