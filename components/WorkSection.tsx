@@ -81,12 +81,7 @@ export default function WorkSection() {
   );
 }
 
-function ProjectCard({ num, name, tagline, description, url, status, year, role, tags }: Project) {
-  const statusLabel =
-    status === "live" ? "● LIVE" : status === "wip" ? "○ WIP" : "○ SOON";
-  const statusColor =
-    status === "live" ? "text-green-600" : "text-amber";
-
+function ProjectCard({ num, name, tagline, description, url, year, role, tags }: Project) {
   return (
     <a
       href={url || "#"}

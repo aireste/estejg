@@ -69,31 +69,3 @@ export default function ContactSection() {
   );
 }
 
-function ContactItem({
-  label,
-  handle,
-  href,
-}: {
-  label: string;
-  handle: string;
-  href: string;
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group block"
-    >
-      <div className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-bg/50 mb-2">
-        {label}
-      </div>
-      <div className="font-display text-lg font-semibold text-bg group-hover:text-amber transition-colors flex items-center gap-2">
-        {handle}
-        <span className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
-          →
-        </span>
-      </div>
-    </a>
-  );
-}
