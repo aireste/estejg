@@ -40,9 +40,7 @@ export default function WorkSection() {
         {/* header */}
         <div className="flex items-end justify-between mb-16 md:mb-20">
           <h2 className="font-display font-bold text-5xl md:text-7xl tracking-tight leading-[0.95]">
-            Selected
-            <br />
-            projects<span className="amber-text">.</span>
+            My work<span className="amber-text">.</span>
           </h2>
           <div className="hidden md:block text-right">
             <div className="eyebrow-muted mb-1.5">Showing</div>
