@@ -12,9 +12,6 @@ export default function AboutSection() {
               <span className="amber-text">.</span>
             </h2>
           </div>
-          <div className="hidden md:block font-mono text-[10.5px] uppercase tracking-[0.18em] text-muted">
-            est. 2025
-          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
