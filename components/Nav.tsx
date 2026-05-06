@@ -23,32 +23,13 @@ export default function Nav() {
       <div className="container-x flex items-center justify-end">
 
         <div className="hidden md:flex items-center gap-8">
-          {[
-            { label: "About", href: "#about" },
-            { label: "Work", href: "#work" },
-            { label: "Contact", href: "#contact" },
-            { label: "GitHub", href: "https://github.com/aireste", external: true },
-          ].map(({ label, href, external }) => (
-            <a
-              key={label}
-              href={href}
-              target={external ? "_blank" : undefined}
-              rel={external ? "noopener noreferrer" : undefined}
-              className={`font-mono text-xs uppercase tracking-[0.14em] transition-colors link-underline ${
-                scrolled ? "hover:text-amber" : "text-white/80 hover:text-white"
-              }`}
-            >
-              {label}
-            </a>
-          ))}
+          <a href="#about" className="font-mono text-xs uppercase tracking-[0.14em] hover:text-amber transition-colors link-underline">About</a>
+          <a href="#work" className="font-mono text-xs uppercase tracking-[0.14em] hover:text-amber transition-colors link-underline">Work</a>
+          <a href="#contact" className="font-mono text-xs uppercase tracking-[0.14em] hover:text-amber transition-colors link-underline">Contact</a>
+          <a href="https://github.com/aireste" target="_blank" rel="noopener noreferrer" className="font-mono text-xs uppercase tracking-[0.14em] hover:text-amber transition-colors link-underline">GitHub</a>
         </div>
 
-        <button
-          className={`md:hidden font-mono text-xs uppercase tracking-[0.14em] ${
-            scrolled ? "" : "text-white/80"
-          }`}
-          aria-label="Menu"
-        >
+        <button className="md:hidden font-mono text-xs uppercase tracking-[0.14em]" aria-label="Menu">
           Menu
         </button>
       </div>

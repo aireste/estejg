@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { Typewriter } from "@/components/ui/typewriter";
+import { GLSLHills } from "@/components/ui/glsl-hills";
 
 export default function HeroSection() {
   return (
@@ -9,26 +9,16 @@ export default function HeroSection() {
       id="top"
       className="relative min-h-screen flex flex-col justify-center pt-32 pb-20 overflow-hidden"
     >
-      {/* aurora #15 — permanent background */}
-      <Image
-        src="/aurora/aurora-5.jpg"
-        alt=""
-        fill
-        className="object-cover object-center"
-        priority
-        aria-hidden="true"
-      />
-
-      {/* dark overlay */}
-      <div className="absolute inset-0 bg-black/45 pointer-events-none" />
+      <GLSLHills speed={0.35} cameraZ={140} />
+      <div className="absolute inset-0 dot-grid opacity-60 pointer-events-none" />
 
       <div className="container-x relative z-10">
-        <p className="text-2xl md:text-3xl font-medium text-white/80 mb-4 fade-up" style={{ animationDelay: "0.2s" }}>
-          Hello, I&apos;m <span className="text-white font-semibold">Esteban</span>.
+        <p className="text-2xl md:text-3xl font-medium text-fg-soft mb-4 fade-up" style={{ animationDelay: "0.2s" }}>
+          Hello, I&apos;m <span className="text-fg font-semibold">Esteban</span>.
         </p>
 
         <h1
-          className="font-display font-bold leading-[0.95] text-[clamp(3rem,11vw,9.5rem)] mb-6 text-white fade-up"
+          className="font-display font-bold leading-[0.95] text-[clamp(3rem,11vw,9.5rem)] mb-6 fade-up"
           style={{ animationDelay: "0.4s" }}
         >
           I have ideas.
@@ -51,10 +41,7 @@ export default function HeroSection() {
           </span>
         </h1>
 
-        <p
-          className="max-w-xl text-base md:text-lg text-white/70 leading-relaxed mb-10 fade-up"
-          style={{ animationDelay: "0.4s" }}
-        >
+        <p className="max-w-xl text-base md:text-lg text-fg-soft leading-relaxed mb-10 fade-up" style={{ animationDelay: "0.4s" }}>
           Self-taught front-end designer and developer. I came up through
           marketing and B2B, so I actually understand what moves a lead through
           a pipeline — and I build things that do the same.
@@ -65,10 +52,7 @@ export default function HeroSection() {
             See my work
             <span className="btn-arrow">→</span>
           </a>
-          <a
-            href="#contact"
-            className="font-mono text-xs uppercase tracking-[0.14em] px-6 py-3 border border-white/30 text-white hover:border-white/70 transition-colors"
-          >
+          <a href="#contact" className="btn-secondary">
             Let&apos;s talk!
           </a>
         </div>
