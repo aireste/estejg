@@ -7,7 +7,6 @@ export default function AboutSection() {
         {/* section header */}
         <div className="flex items-baseline justify-between mb-16 md:mb-20">
           <div>
-            <div className="eyebrow mb-3">/ 01 — About</div>
             <h2 className="font-display font-bold text-5xl md:text-7xl tracking-tight">
               The builder
               <span className="amber-text">.</span>
