@@ -1,6 +1,7 @@
 "use client";
 
 import { Typewriter } from "@/components/ui/typewriter";
+import { GLSLHills } from "@/components/ui/glsl-hills";
 
 export default function HeroSection() {
   return (
@@ -8,8 +9,11 @@ export default function HeroSection() {
       id="top"
       className="relative min-h-screen flex flex-col justify-center pt-32 pb-20 overflow-hidden"
     >
+      {/* glsl hills */}
+      <GLSLHills speed={0.35} cameraZ={140} />
+
       {/* dot grid background */}
-      <div className="absolute inset-0 dot-grid opacity-60 pointer-events-none" />
+      <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
 
 <div className="container-x relative z-10">
         {/* greeting */}
