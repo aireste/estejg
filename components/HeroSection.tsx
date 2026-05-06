@@ -46,9 +46,9 @@ export default function HeroSection() {
 
         {/* subline */}
         <p className="max-w-xl text-base md:text-lg text-fg-soft leading-relaxed mb-10 fade-up" style={{ animationDelay: "0.4s" }}>
-          Frontend builder with a background in marketing analytics and B2B.
-          Most devs don&apos;t know what a conversion funnel is. Most marketers
-          can&apos;t ship code. I do both.
+          Self-taught front-end designer and developer. I came up through
+          marketing and B2B, so I actually understand what moves a lead through
+          a pipeline — and I build things that do the same.
         </p>
 
         {/* CTAs */}
