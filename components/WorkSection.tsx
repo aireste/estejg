@@ -6,6 +6,7 @@ type Project = {
   num: string;
   name: string;
   tagline: string;
+  description?: string;
   url?: string;
   year: string;
   role: string;
@@ -17,6 +18,8 @@ const projects: Project[] = [
     num: "01",
     name: "SPCTR",
     tagline: "Lead-gen, weaponized.",
+    description:
+      "I founded SPCTR and built it top to bottom — brand, front-end, back-end, and the AI-powered outreach engine that gets clients booked.",
     url: "https://spctr.run",
     year: "2025",
     role: "Founder · Designer · Engineer",
@@ -85,7 +88,7 @@ export default function WorkSection() {
   );
 }
 
-function ProjectCard({ num, name, tagline, url, year, role, tags }: Project) {
+function ProjectCard({ num, name, tagline, description, url, year, role, tags }: Project) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(PREVIEW_H / IFRAME_H);
 
@@ -179,6 +182,10 @@ function ProjectCard({ num, name, tagline, url, year, role, tags }: Project) {
             <div className="font-mono text-sm">{year}</div>
           </div>
         </div>
+
+        {description && (
+          <p className="text-fg-soft text-sm leading-relaxed mb-4">{description}</p>
+        )}
 
         <div className="flex flex-wrap gap-2 mb-4">
           {tags.map((t) => (
