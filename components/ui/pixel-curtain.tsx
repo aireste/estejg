@@ -5,9 +5,9 @@ import { useEffect, useRef, useState, useMemo } from "react";
 const COLS = 14;
 const ROWS = 8;
 const FPS = 30;
-const HOLD_FRAMES = 12;       // solid before wave starts
-const WAVE_SPREAD = 32;       // frames across which wave sweeps
-const CELL_FADE = 7;          // frames each cell takes to fade
+const HOLD_FRAMES = 18;       // solid before wave starts
+const WAVE_SPREAD = 38;       // frames across which wave sweeps
+const CELL_FADE = 10;         // frames each cell takes to fade
 
 const TOTAL_FRAMES = HOLD_FRAMES + WAVE_SPREAD + CELL_FADE + 6;
 
@@ -83,7 +83,7 @@ export function PixelCurtain({ onDone }: { onDone?: () => void }) {
         return (
           <div
             key={i}
-            style={{ backgroundColor: "var(--bg)", opacity }}
+            style={{ backgroundColor: "var(--fg)", opacity }}
           />
         );
       })}
