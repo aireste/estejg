@@ -4,17 +4,8 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative py-24 md:py-36 bg-fg text-bg overflow-hidden"
+      className="relative py-24 md:py-36 text-bg overflow-hidden"
     >
-      {/* dot grid */}
-      <div
-        className="absolute inset-0 opacity-25 pointer-events-none"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, rgba(246,244,238,0.4) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-        }}
-      />
 
 
       <div className="container-x relative z-10">

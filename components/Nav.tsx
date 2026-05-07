@@ -16,7 +16,7 @@ export default function Nav() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "py-3 backdrop-blur-md bg-[rgba(246,244,238,0.78)] border-b border-[rgba(10,10,10,0.08)]"
+          ? "py-3 backdrop-blur-md bg-[rgba(10,10,10,0.85)] border-b border-[rgba(246,244,238,0.08)]"
           : "py-5 bg-transparent"
       }`}
     >
@@ -35,7 +35,7 @@ export default function Nav() {
               target={external ? "_blank" : undefined}
               rel={external ? "noopener noreferrer" : undefined}
               className={`font-mono text-xs uppercase tracking-[0.14em] transition-colors link-underline ${
-                scrolled ? "hover:text-amber" : "text-white/70 hover:text-white"
+                scrolled ? "text-white/70 hover:text-amber" : "text-white/70 hover:text-white"
               }`}
             >
               {label}
@@ -44,7 +44,7 @@ export default function Nav() {
         </div>
 
         <button
-          className={`md:hidden font-mono text-xs uppercase tracking-[0.14em] ${scrolled ? "" : "text-white/70"}`}
+          className={`md:hidden font-mono text-xs uppercase tracking-[0.14em] text-white/70`}
           aria-label="Menu"
         >
           Menu
