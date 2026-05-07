@@ -41,8 +41,9 @@ export default function HeroSection() {
         </h1>
 
         <p className="max-w-xl text-base md:text-lg text-white/60 leading-relaxed mb-10 fade-up" style={{ animationDelay: "0.4s" }}>
-          The barrier to building used to be knowing how to code. That barrier
-          is gone. I&apos;m taking full advantage.
+          What used to take a full team and serious budget now takes one person
+          with a vision. I&apos;m building that way — and making it count for the
+          people I work with.
         </p>
 
         <div className="flex flex-wrap items-center gap-3 mb-16 fade-up" style={{ animationDelay: "0.5s" }}>
