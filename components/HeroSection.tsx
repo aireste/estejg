@@ -13,7 +13,7 @@ export default function HeroSection() {
 
       <div className="container-x relative z-10">
         <p className="text-2xl md:text-3xl font-medium text-white/70 mb-4 fade-up" style={{ animationDelay: "0.2s" }}>
-          Hi there, I&apos;m <span className="text-white font-semibold">Esteban</span>.
+          Hi there, I&apos;m <span className="text-white font-semibold">Esteban</span>!
         </p>
 
         <h1
