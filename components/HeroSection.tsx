@@ -41,9 +41,8 @@ export default function HeroSection() {
         </h1>
 
         <p className="max-w-xl text-base md:text-lg text-white/60 leading-relaxed mb-10 fade-up" style={{ animationDelay: "0.4s" }}>
-          Self-taught front-end designer and developer. I came up through
-          marketing and B2B, so I actually understand what moves a lead through
-          a pipeline — and I build things that do the same.
+          I build things. My background is analytics and marketing — which
+          means I care about whether it works, not just whether it looks good.
         </p>
 
         <div className="flex flex-wrap items-center gap-3 mb-16 fade-up" style={{ animationDelay: "0.5s" }}>
