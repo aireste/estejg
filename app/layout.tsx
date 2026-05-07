@@ -10,7 +10,7 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Esteban Guerra — Builder",
+  title: "Esteban Guerra",
   description: "I have ideas. I build them.",
 };
 
