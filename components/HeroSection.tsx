@@ -54,7 +54,7 @@ export default function HeroSection() {
             href="#contact"
             className="font-mono text-xs uppercase tracking-[0.14em] px-6 py-3 border border-white/25 text-white/80 hover:border-white/60 hover:text-white transition-colors"
           >
-            Let&apos;s talk!
+            Let&apos;s Build
           </a>
         </div>
       </div>
