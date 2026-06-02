@@ -40,8 +40,7 @@ export default function ContactSection() {
         {/* footer strip */}
         <div className="mt-24 pt-8 border-t border-bg/15 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-bg/50">
-            © {new Date().getFullYear()} Esteban Guerra · Built with caffeine
-            and Claude
+            © {new Date().getFullYear()} Guerra Digital LLC
           </div>
           <div className="flex items-center gap-6">
             <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-bg/50">

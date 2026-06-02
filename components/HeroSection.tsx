@@ -17,16 +17,16 @@ export default function HeroSection() {
         </p>
 
         <h1
-          className="font-display font-bold leading-[0.95] text-[clamp(3rem,11vw,9.5rem)] mb-6 text-white fade-up"
+          className="font-display font-bold leading-[0.95] text-[clamp(2.5rem,8vw,7rem)] mb-6 text-white fade-up"
           style={{ animationDelay: "0.4s" }}
         >
           I have ideas.
           <span className="block font-medium whitespace-nowrap relative">
             <span className="opacity-0 pointer-events-none select-none" aria-hidden="true">
-              I build pipelines._
+              I can build pipelines._
             </span>
             <span className="absolute inset-0">
-              I build{" "}
+              I can build{" "}
               <Typewriter
                 text={["products.", "pipelines.", "sites.", "agencies.", "things."]}
                 speed={75}

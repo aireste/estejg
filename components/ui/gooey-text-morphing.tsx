@@ -7,6 +7,7 @@ interface GooeyTextProps {
   texts: string[];
   morphTime?: number;
   cooldownTime?: number;
+  random?: boolean;
   className?: string;
   textClassName?: string;
 }
@@ -15,6 +16,7 @@ export function GooeyText({
   texts,
   morphTime = 1,
   cooldownTime = 0.25,
+  random = false,
   className,
   textClassName,
 }: GooeyTextProps) {
@@ -22,16 +24,25 @@ export function GooeyText({
   const text2Ref = React.useRef<HTMLSpanElement>(null);
 
   React.useEffect(() => {
+    // Start so that text2 (visible) shows texts[0] = "Hello"
     let textIndex = texts.length - 1;
+    let nextIndex = 1; // first transition goes to index 1
     let time = new Date();
     let morph = 0;
     let cooldown = cooldownTime;
+
+    const pickNext = (currentVisible: number) => {
+      if (!random) return (currentVisible + 1) % texts.length;
+      let next;
+      do { next = Math.floor(Math.random() * texts.length); }
+      while (next === currentVisible && texts.length > 1);
+      return next;
+    };
 
     const setMorph = (fraction: number) => {
       if (text1Ref.current && text2Ref.current) {
         text2Ref.current.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
         text2Ref.current.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
-
         fraction = 1 - fraction;
         text1Ref.current.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
         text1Ref.current.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
@@ -52,12 +63,10 @@ export function GooeyText({
       morph -= cooldown;
       cooldown = 0;
       let fraction = morph / morphTime;
-
       if (fraction > 1) {
         cooldown = cooldownTime;
         fraction = 1;
       }
-
       setMorph(fraction);
     };
 
@@ -68,15 +77,16 @@ export function GooeyText({
       const shouldIncrementIndex = cooldown > 0;
       const dt = (newTime.getTime() - time.getTime()) / 1000;
       time = newTime;
-
       cooldown -= dt;
 
       if (cooldown <= 0) {
         if (shouldIncrementIndex) {
-          textIndex = (textIndex + 1) % texts.length;
+          const currentVisible = nextIndex;
+          textIndex = currentVisible;
+          nextIndex = pickNext(currentVisible);
           if (text1Ref.current && text2Ref.current) {
-            text1Ref.current.textContent = texts[textIndex % texts.length];
-            text2Ref.current.textContent = texts[(textIndex + 1) % texts.length];
+            text1Ref.current.textContent = texts[textIndex];
+            text2Ref.current.textContent = texts[nextIndex];
           }
         }
         doMorph();
@@ -85,18 +95,21 @@ export function GooeyText({
       }
     }
 
-    animate();
+    // Initialise spans so text2 shows texts[0] immediately
+    if (text1Ref.current && text2Ref.current) {
+      text1Ref.current.textContent = texts[texts.length - 1];
+      text2Ref.current.textContent = texts[0];
+    }
 
-    return () => {
-      cancelAnimationFrame(frame);
-    };
-  }, [texts, morphTime, cooldownTime]);
+    animate();
+    return () => cancelAnimationFrame(frame);
+  }, [texts, morphTime, cooldownTime, random]);
 
   return (
     <div className={cn("relative", className)}>
       <svg className="absolute h-0 w-0" aria-hidden="true" focusable="false">
         <defs>
-          <filter id="threshold">
+          <filter id="gooey-threshold">
             <feColorMatrix
               in="SourceGraphic"
               type="matrix"
@@ -108,24 +121,17 @@ export function GooeyText({
           </filter>
         </defs>
       </svg>
-
       <div
         className="flex h-full items-center justify-start"
-        style={{ filter: "url(#threshold)" }}
+        style={{ filter: "url(#gooey-threshold)" }}
       >
         <span
           ref={text1Ref}
-          className={cn(
-            "absolute inline-block select-none whitespace-nowrap",
-            textClassName
-          )}
+          className={cn("absolute inline-block select-none whitespace-nowrap", textClassName)}
         />
         <span
           ref={text2Ref}
-          className={cn(
-            "absolute inline-block select-none whitespace-nowrap",
-            textClassName
-          )}
+          className={cn("absolute inline-block select-none whitespace-nowrap", textClassName)}
         />
       </div>
     </div>
