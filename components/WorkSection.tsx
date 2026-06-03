@@ -81,7 +81,7 @@ export default function WorkSection() {
   );
 }
 
-function ProjectCard({ num, name, tagline, description, url, year }: Project) {
+function ProjectCard({ num, name, tagline, description, url }: Project) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(PREVIEW_H / IFRAME_H);
 
