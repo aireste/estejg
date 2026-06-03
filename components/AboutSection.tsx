@@ -20,9 +20,14 @@ export default function AboutSection() {
           {/* bio — right */}
           <div className="lg:col-span-7 space-y-6 pt-2">
             <p className="font-display text-2xl md:text-3xl leading-snug font-medium text-bg">
-              We&apos;re in the middle of a shift. Apps that used to take months
-              now take days. Products that needed a full team can be built by one
-              person — if that person knows what they&apos;re building and why.
+              AI has compressed the build cycle. Apps that used to take months
+              now take days. A single person can now build what used to take a
+              whole team.
+            </p>
+
+            <p className="text-[rgba(246,244,238,0.6)] text-base md:text-lg leading-relaxed">
+              I&apos;ve always had ideas. What I didn&apos;t have was a way to
+              build them. Until now.
             </p>
 
             <p className="text-[rgba(246,244,238,0.6)] text-base md:text-lg leading-relaxed">
