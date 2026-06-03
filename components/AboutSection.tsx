@@ -21,25 +21,20 @@ export default function AboutSection() {
           <div className="lg:col-span-7 space-y-6 pt-2">
             <p className="font-display text-2xl md:text-3xl leading-snug font-medium text-bg">
               We&apos;re in the middle of a shift. Apps that used to take months
-              to ship now take days. Products that needed a full team can be
-              built by one person with the right setup.
+              now take days. Products that needed a full team can be built by one
+              person — if that person knows what they&apos;re building and why.
             </p>
 
             <p className="text-[rgba(246,244,238,0.6)] text-base md:text-lg leading-relaxed">
-              I&apos;ve always had ideas. What I didn&apos;t have was a way to
-              build them. Until now.
+              That&apos;s where I come in. My background is analytics and B2B
+              marketing — I&apos;ve spent years understanding how buyers think,
+              how pipelines move, and what separates a product that converts from
+              one that doesn&apos;t.
             </p>
 
             <p className="text-[rgba(246,244,238,0.6)] text-base md:text-lg leading-relaxed">
-              My background is analytics and B2B marketing. I know how pipelines
-              work, how buyers move, what makes a lead worth chasing. That&apos;s
-              not a soft skill — that&apos;s the difference between building
-              something pretty and building something that works.
-            </p>
-
-            <p className="text-[rgba(246,244,238,0.6)] text-base md:text-lg leading-relaxed">
-              AI changed what&apos;s possible. I&apos;m using it to build tools,
-              projects, and products I couldn&apos;t have touched two years ago.
+              AI changed what I can build. I&apos;m using it to turn ideas that
+              would&apos;ve sat in a notebook into real products.
             </p>
 
             <div className="pt-4">
