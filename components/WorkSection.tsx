@@ -168,10 +168,6 @@ function ProjectCard({ num, name, tagline, description, url, year }: Project) {
             </div>
             <div className="font-display text-base text-amber">{tagline}</div>
           </div>
-          <div className="text-right shrink-0">
-            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[rgba(246,244,238,0.35)] mb-0.5">Year</div>
-            <div className="font-mono text-sm text-bg">{year}</div>
-          </div>
         </div>
 
         {description && (
