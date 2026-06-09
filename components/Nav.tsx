@@ -73,7 +73,7 @@ export default function Nav() {
               target={external ? "_blank" : undefined}
               rel={external ? "noopener noreferrer" : undefined}
               onClick={() => setOpen(false)}
-              className="font-display font-bold text-4xl text-bg/50 hover:text-bg transition-all duration-200"
+              className="font-display font-bold text-4xl text-[#f6f4ee]/50 hover:text-[#f6f4ee] transition-all duration-200"
               style={{ transitionDelay: open ? `${i * 60}ms` : "0ms" }}
             >
               {label}<span className="text-amber">.</span>
