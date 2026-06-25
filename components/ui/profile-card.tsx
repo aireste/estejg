@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Mail } from "lucide-react";
 
 const GitHubIcon = ({ size = 20 }: { size?: number }) => (
@@ -47,14 +48,12 @@ export function ProfileCard({
         style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.5)" }}
       >
         <div className="w-64 h-64 mb-4 rounded-full p-1 border-2 border-[rgba(246,244,238,0.15)] overflow-hidden">
-          <img
+          <Image
             src={avatarUrl}
             alt={`${name}'s avatar`}
+            width={256}
+            height={256}
             className="w-full h-full rounded-full object-cover object-[80%_15%] scale-125"
-            onError={(e) => {
-              const img = e.target as HTMLImageElement;
-              img.src = `https://placehold.co/96x96/0a0a0a/f6f4ee?text=${name.charAt(0)}`;
-            }}
           />
         </div>
 

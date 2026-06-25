@@ -93,7 +93,7 @@ const Typewriter = ({
     }
 
     return () => clearTimeout(timeout);
-  }, [currentIndex, displayText, isDeleting, speed, deleteSpeed, waitTime, texts, currentTextIndex, loop]);
+  }, [currentIndex, displayText, isDeleting, speed, deleteSpeed, waitTime, texts, currentTextIndex, loop, initialDelay]);
 
   return (
     <span className={cn("inline whitespace-pre-wrap tracking-tight", className)}>
