@@ -37,13 +37,6 @@ export default function WorkSection() {
           <h2 className="font-display font-bold text-5xl md:text-7xl tracking-tight leading-[0.95] text-bg">
             My work<span className="amber-text">.</span>
           </h2>
-          <div className="hidden md:block text-right">
-            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[rgba(246,244,238,0.35)] mb-1.5">Showing</div>
-            <div className="font-display font-bold text-2xl text-bg">
-              {String(projects.length).padStart(2, "0")} /{" "}
-              {String(projects.length).padStart(2, "0")}
-            </div>
-          </div>
         </div>
 
         {/* grid — 1 col now, becomes 2 col as you add projects */}
