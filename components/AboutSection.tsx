@@ -22,7 +22,7 @@ export default function AboutSection() {
           {/* bio — right */}
           <div className="lg:col-span-7 space-y-6 pt-2">
             <p className="font-display text-2xl md:text-3xl leading-snug font-medium text-bg">
-              AI has compressed the build cycle. Apps that used to take months
+              AI has changed who gets to build. Apps that used to take months
               now take days. A single person can now build what used to take a
               whole team.
             </p>
