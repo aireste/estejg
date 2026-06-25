@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const links = [
+const links: { label: string; href: string; external?: boolean }[] = [
   { label: "About",   href: "#about" },
   { label: "Work",    href: "#work" },
   { label: "Contact", href: "#contact" },
