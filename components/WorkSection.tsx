@@ -15,7 +15,7 @@ const projects: Project[] = [
   {
     num: "01",
     name: "SPCTR",
-    tagline: "Lead-gen, weaponized.",
+    tagline: "We prospect. You close.",
     description:
       "I founded SPCTR and built it top to bottom — brand, front-end, back-end, and the AI-powered outreach engine that fills your calendar with sales meetings.",
     url: "https://spctr.run",
