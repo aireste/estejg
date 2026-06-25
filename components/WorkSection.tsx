@@ -25,7 +25,7 @@ const projects: Project[] = [
 
 const IFRAME_W = 1440;
 const IFRAME_H = 900;
-const PREVIEW_H = 420;
+const PREVIEW_H = 300;
 
 export default function WorkSection() {
   return (
@@ -48,9 +48,7 @@ export default function WorkSection() {
 
         {/* grid — 1 col now, becomes 2 col as you add projects */}
         <div
-          className={`grid gap-6 ${
-            projects.length > 1 ? "md:grid-cols-2" : "grid-cols-1"
-          }`}
+          className="grid gap-6 md:grid-cols-2"
         >
           {projects.map((p) => (
             <ProjectCard key={p.num} {...p} />
@@ -70,9 +68,6 @@ export default function WorkSection() {
                 </a>{" "}
                 if you want a sneak peek.
               </div>
-            </div>
-            <div className="font-mono text-xs uppercase tracking-[0.18em] text-amber group-hover:translate-x-1 transition-transform shrink-0">
-              [ WIP ]
             </div>
           </div>
         </div>

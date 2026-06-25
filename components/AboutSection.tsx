@@ -1,20 +1,22 @@
 "use client";
 
+import { ProfileCard, ESTEBAN_LINKS } from "@/components/ui/profile-card";
+
 export default function AboutSection() {
   return (
     <section id="about" className="relative py-24 md:py-32">
       <div className="container-x relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
-          {/* photo placeholder — left */}
-          <div className="lg:col-span-5">
-            <div className="relative aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl">
-              <img
-                src="/esteban.jpg"
-                alt="Esteban Guerra"
-                className="absolute inset-0 w-full h-full object-cover object-[80%_5%] scale-125"
-              />
-            </div>
+          {/* profile card — left */}
+          <div className="lg:col-span-5 flex justify-start">
+            <ProfileCard
+              avatarUrl="/esteban.jpg"
+              name="Esteban Guerra"
+              title=""
+              bio="I turn ideas into products. Analytics and B2B marketing background, now building with AI."
+              socialLinks={ESTEBAN_LINKS}
+            />
           </div>
 
           {/* bio — right */}

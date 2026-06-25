@@ -6,7 +6,6 @@ const links = [
   { label: "About",   href: "#about" },
   { label: "Work",    href: "#work" },
   { label: "Contact", href: "#contact" },
-  { label: "GitHub",  href: "https://github.com/aireste", external: true },
 ];
 
 export default function Nav() {
