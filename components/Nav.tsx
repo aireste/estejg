@@ -28,7 +28,7 @@ export default function Nav() {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled || open
+          open
             ? "py-3 backdrop-blur-md bg-[rgba(10,10,10,0.92)] border-b border-[rgba(246,244,238,0.08)]"
             : "py-5 bg-transparent"
         }`}
