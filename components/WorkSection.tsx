@@ -48,7 +48,7 @@ export default function WorkSection() {
           ))}
 
           {/* placeholder */}
-          <div className="group border border-dashed border-[rgba(246,244,238,0.12)] p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 hover:border-amber transition-colors">
+          <div className="group border border-dashed border-[rgba(246,244,238,0.12)] p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 hover:border-amber transition-colors bg-[#141414]">
             <div>
               <div className="font-display font-bold text-2xl md:text-3xl text-bg">
                 More projects in the pipeline
@@ -92,7 +92,7 @@ function ProjectCard({ num, name, tagline, description, url }: Project) {
       href={url ?? "#"}
       target={url ? "_blank" : undefined}
       rel={url ? "noopener noreferrer" : undefined}
-      className="group relative block border border-[rgba(246,244,238,0.1)] hover:border-amber transition-all duration-300 overflow-hidden bg-[rgba(246,244,238,0.03)]"
+      className="group relative block border border-[rgba(246,244,238,0.1)] hover:border-amber transition-all duration-300 overflow-hidden bg-[#141414]"
     >
       {/* amber accent bar */}
       <div className="absolute top-0 left-0 h-[3px] w-14 bg-amber group-hover:w-full transition-all duration-500 ease-out z-10" />
