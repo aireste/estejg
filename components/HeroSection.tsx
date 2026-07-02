@@ -46,12 +46,6 @@ export default function HeroSection() {
           people I work with.
         </p>
 
-        <div className="flex flex-wrap items-center gap-3 mb-16 fade-up" style={{ animationDelay: "0.5s" }}>
-          <a href="#work" className="font-mono text-xs uppercase tracking-[0.14em] px-6 py-3 border border-white/25 text-white/80 hover:border-white/60 hover:text-white transition-colors inline-flex items-center gap-2">
-            See my work
-            <span>→</span>
-          </a>
-        </div>
       </div>
     </section>
   );

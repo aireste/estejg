@@ -44,14 +44,6 @@ export default function AboutSection() {
               would&apos;ve sat in a notebook into real products.
             </p>
 
-            <div className="pt-4">
-              <a
-                href="#contact"
-                className="font-mono text-xs uppercase tracking-[0.14em] px-6 py-3 border border-[rgba(246,244,238,0.25)] text-[rgba(246,244,238,0.8)] hover:border-[rgba(246,244,238,0.6)] hover:text-bg transition-colors inline-flex items-center gap-2"
-              >
-                Let&apos;s Build
-              </a>
-            </div>
           </div>
 
         </div>

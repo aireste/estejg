@@ -1,16 +1,16 @@
-import Nav from "@/components/Nav";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import WorkSection from "@/components/WorkSection";
 import ContactSection from "@/components/ContactSection";
 import { PixelCurtain } from "@/components/ui/pixel-curtain";
 import { GridPattern } from "@/components/ui/grid-pattern";
+import FloatingMenu from "@/components/ui/liquid-morph-floating-menu";
 
 export default function Home() {
   return (
     <>
       <PixelCurtain />
-      <Nav />
+      <FloatingMenu />
       <main>
         <HeroSection />
 
