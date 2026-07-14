@@ -8,6 +8,7 @@ type Project = {
   tagline: string;
   description?: string;
   url?: string;
+  caseStudyHref?: string;
   year: string;
 };
 
@@ -19,6 +20,7 @@ const projects: Project[] = [
     description:
       "I founded SPCTR and built it top to bottom — brand, front-end, back-end, and the AI-powered outreach engine that fills your calendar with sales meetings.",
     url: "https://spctr.run",
+    caseStudyHref: "/work/spctr",
     year: "2025",
   },
 ];
@@ -69,7 +71,7 @@ export default function WorkSection() {
   );
 }
 
-function ProjectCard({ num, name, tagline, description, url }: Project) {
+function ProjectCard({ num, name, tagline, description, url, caseStudyHref }: Project) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(PREVIEW_H / IFRAME_H);
 
@@ -87,11 +89,14 @@ function ProjectCard({ num, name, tagline, description, url }: Project) {
 
   const visibleH = Math.min(IFRAME_H * scale, PREVIEW_H);
 
+  const href = caseStudyHref ?? url ?? "#";
+  const isExternal = !caseStudyHref && !!url;
+
   return (
     <a
-      href={url ?? "#"}
-      target={url ? "_blank" : undefined}
-      rel={url ? "noopener noreferrer" : undefined}
+      href={href}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
       className="group relative block border border-[rgba(246,244,238,0.1)] hover:border-amber transition-all duration-300 overflow-hidden bg-[#141414]"
     >
       {/* amber accent bar */}
@@ -137,7 +142,7 @@ function ProjectCard({ num, name, tagline, description, url }: Project) {
         {/* hover overlay */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <span className="font-mono text-xs uppercase tracking-[0.18em] bg-[#f6f4ee] text-[#0a0a0a] px-5 py-2.5 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-            Visit site →
+            {caseStudyHref ? "View case study →" : "Visit site →"}
           </span>
         </div>
       </div>
