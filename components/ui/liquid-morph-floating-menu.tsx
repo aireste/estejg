@@ -33,6 +33,8 @@ function MenuButton({
 
   return (
     <motion.button
+      type="button"
+      tabIndex={isOpen ? 0 : -1}
       onClick={handleClick}
       className="text-[#f6f4ee] text-[22px] uppercase leading-none font-display font-bold tracking-tight transition-all duration-200 hover:scale-110 hover:text-white"
       animate={{ opacity: isOpen ? 1 : 0 }}
@@ -138,8 +140,11 @@ export default function FloatingMenu({ items = defaultItems }: { items?: MenuIte
         </div>
 
         {/* Bottom bar */}
-        <motion.div
-          className="relative z-10 flex items-center justify-between w-full shrink-0 cursor-pointer"
+        <motion.button
+          type="button"
+          aria-expanded={isOpen}
+          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+          className="relative z-10 flex items-center justify-between w-full shrink-0 cursor-pointer bg-transparent border-0 outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
           onClick={() => setIsOpen(!isOpen)}
           animate={{
             paddingLeft: isOpen ? 24 : 18,
@@ -178,7 +183,7 @@ export default function FloatingMenu({ items = defaultItems }: { items?: MenuIte
               transition={{ duration: 0.4, ease }}
             />
           </div>
-        </motion.div>
+        </motion.button>
       </motion.div>
     </motion.div>
   );

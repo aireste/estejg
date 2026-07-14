@@ -109,10 +109,10 @@ function ProjectCard({ num, name, tagline, description, url, caseStudyHref }: Pr
             <div key={i} className="w-2.5 h-2.5 rounded-full bg-[rgba(246,244,238,0.15)]" />
           ))}
         </div>
-        <div className="flex-1 px-3 py-1 rounded bg-[rgba(246,244,238,0.08)] font-mono text-[10.5px] text-[rgba(246,244,238,0.35)] truncate">
+        <div className="flex-1 px-3 py-1 rounded bg-[rgba(246,244,238,0.08)] font-mono text-[10.5px] text-[rgba(246,244,238,0.5)] truncate">
           {url?.replace("https://", "") ?? name.toLowerCase()}
         </div>
-        <span className="font-mono text-[10.5px] text-[rgba(246,244,238,0.35)] group-hover:text-amber transition-colors shrink-0">
+        <span className="font-mono text-[10.5px] text-[rgba(246,244,238,0.5)] group-hover:text-amber transition-colors shrink-0">
           ↗
         </span>
       </div>
@@ -152,7 +152,7 @@ function ProjectCard({ num, name, tagline, description, url, caseStudyHref }: Pr
         <div className="flex items-start justify-between gap-6 mb-4">
           <div>
             <div className="flex items-baseline gap-2.5 mb-1">
-              <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-[rgba(246,244,238,0.35)]">
+              <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-[rgba(246,244,238,0.5)]">
                 {num}
               </span>
               <h3 className="font-display font-bold text-2xl md:text-3xl tracking-tight text-bg">
