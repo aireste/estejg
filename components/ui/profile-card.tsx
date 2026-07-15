@@ -51,8 +51,9 @@ export function ProfileCard({
           <Image
             src={avatarUrl}
             alt={`${name}'s avatar`}
-            width={256}
-            height={256}
+            width={1024}
+            height={1024}
+            quality={100}
             className="w-full h-full rounded-full object-cover object-[80%_15%] scale-125"
           />
         </div>
