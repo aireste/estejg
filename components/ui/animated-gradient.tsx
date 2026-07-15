@@ -146,7 +146,7 @@ export default function AnimatedGradient({
     const container = containerRef.current;
     if (!canvas || !container || !isMounted) return;
 
-    const gl = canvas.getContext("webgl2", { premultipliedAlpha: true, alpha: true, antialias: true });
+    const gl = canvas.getContext("webgl2", { premultipliedAlpha: true, alpha: true, antialias: false });
     if (!gl) return;
 
     const vertexShaderSource = `#version 300 es
@@ -192,12 +192,13 @@ export default function AnimatedGradient({
       swirlIterations: gl.getUniformLocation(program, "u_swirlIterations"),
     };
 
+    const MAX_CANVAS_DIM = 4096;
     const resize = () => {
       const w = container.clientWidth;
       const h = container.clientHeight;
-      const pr = window.devicePixelRatio || 1;
-      canvas.width = w * pr;
-      canvas.height = h * pr;
+      const pr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.min(Math.round(w * pr), MAX_CANVAS_DIM);
+      canvas.height = Math.min(Math.round(h * pr), MAX_CANVAS_DIM);
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
       gl.viewport(0, 0, canvas.width, canvas.height);
