@@ -1,6 +1,7 @@
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import WorkSection from "@/components/WorkSection";
+import SkillsSection from "@/components/SkillsSection";
 import ContactSection from "@/components/ContactSection";
 import { PixelCurtain } from "@/components/ui/pixel-curtain";
 import AnimatedGradient from "@/components/ui/animated-gradient";
@@ -38,6 +39,7 @@ export default function Home() {
           <div className="relative z-[1]">
             <AboutSection />
             <WorkSection />
+            <SkillsSection />
             <ContactSection />
           </div>
         </div>

@@ -14,7 +14,7 @@ export default function AboutSection() {
               avatarUrl="/esteban.jpg"
               name="Esteban Guerra"
               title=""
-              bio="I turn ideas into products. Analytics and B2B marketing background, now building with AI."
+              bio="I build AI into real products. B2B marketing and analytics background."
               socialLinks={ESTEBAN_LINKS}
             />
           </div>
@@ -40,8 +40,15 @@ export default function AboutSection() {
             </p>
 
             <p className="text-[rgba(246,244,238,0.6)] text-base md:text-lg leading-relaxed">
-              AI changed what I can build. I&apos;m using it to turn ideas that
-              would&apos;ve sat in a notebook into real products.
+              Now I build the plumbing: connecting models like Claude to live
+              data, tools and each other so they do real work. A prediction
+              engine that explains itself. An MCP server any AI can plug into.
+              A project board my AI keeps current for me.
+            </p>
+
+            <p className="text-[rgba(246,244,238,0.6)] text-base md:text-lg leading-relaxed">
+              The marketing background is my edge. I know what a buyer needs to
+              see, so what I build is meant to get used, not just demoed.
             </p>
 
           </div>

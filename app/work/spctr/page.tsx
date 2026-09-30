@@ -4,15 +4,17 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "SPCTR — Case Study | Esteban Guerra",
   description:
-    "How I built SPCTR: a pay-per-lead outbound agency, from brand and site to the sending engine behind it.",
+    "How I built SPCTR: an AI implementation studio, from brand and site to the lead-generation engine behind it.",
 };
 
 const spctrPalette = [
-  { hex: "#c0fc04", name: "Acid" },
+  { hex: "#0c0c11", name: "Ink" },
+  { hex: "#eeede7", name: "Paper" },
+  { hex: "#c0fc04", name: "Lime" },
   { hex: "#ff5500", name: "Orange" },
-  { hex: "#ea027e", name: "Pink" },
-  { hex: "#3601fb", name: "Indigo" },
-  { hex: "#00d4aa", name: "Teal" },
+  { hex: "#ea027e", name: "Magenta" },
+  { hex: "#3601fb", name: "Violet" },
+  { hex: "#00d4aa", name: "Green" },
 ];
 
 const engineSteps = [
@@ -45,7 +47,7 @@ const engineSteps = [
 
 const meta = [
   { label: "Role", value: "Founder — everything" },
-  { label: "Stack", value: "Next.js 14 · Three.js · Tailwind" },
+  { label: "Stack", value: "Next.js 14 · TypeScript · Tailwind" },
   { label: "Year", value: "2025 — present" },
 ];
 
@@ -55,7 +57,7 @@ export default function SpctrCaseStudy() {
       {/* top bar */}
       <header className="container-x flex items-center justify-between py-6">
         <Link
-          href="/"
+          href="/#work"
           className="font-mono text-[11px] uppercase tracking-[0.18em] text-[rgba(246,244,238,0.5)] hover:text-amber transition-colors"
         >
           ← Esteban Guerra
@@ -72,7 +74,7 @@ export default function SpctrCaseStudy() {
 
       {/* hero */}
       <section className="container-x pt-16 md:pt-24 pb-20 md:pb-28">
-        <div className="eyebrow mb-6 fade-up">Case study — 01</div>
+        <div className="eyebrow mb-6 fade-up">Case study — 02</div>
         <h1
           className="font-display font-bold text-6xl md:text-8xl tracking-tight leading-[0.95] fade-up"
           style={{ animationDelay: "0.1s" }}
@@ -83,16 +85,17 @@ export default function SpctrCaseStudy() {
           className="font-display text-xl md:text-2xl text-amber mt-4 fade-up"
           style={{ animationDelay: "0.2s" }}
         >
-          We prospect. You close.
+          AI that brings in business.
         </p>
         <p
           className="text-[rgba(246,244,238,0.6)] text-base md:text-lg leading-relaxed max-w-2xl mt-8 fade-up"
           style={{ animationDelay: "0.3s" }}
         >
-          A pay-per-lead outbound agency I founded and built end to end —
-          brand, site, company, and the sending engine behind it. This isn&apos;t
-          a results page yet. It&apos;s a methodology page: how it works, and why
-          it&apos;s built this way.
+          An AI implementation studio I founded and built end to end: brand,
+          site, company, and the engine behind it. It started as a
+          pay-per-meeting outbound agency, and booked meetings are still the
+          core offer. This isn&apos;t a results page yet. It&apos;s a methodology
+          page: how it works, and why it&apos;s built this way.
         </p>
 
         {/* meta row */}
@@ -150,7 +153,7 @@ export default function SpctrCaseStudy() {
               I only win when you win.
             </h2>
             <p className="text-[rgba(246,244,238,0.6)] text-base md:text-lg leading-relaxed">
-              SPCTR is pay-per-lead. If I don&apos;t deliver meetings, I
+              SPCTR is pay-per-meeting. If I don&apos;t deliver meetings, I
               don&apos;t get paid. That&apos;s not a tagline — it&apos;s the
               structure of the business, and it forces every decision downstream
               of it: narrow lists, relevant copy, honest reporting.
@@ -182,25 +185,28 @@ export default function SpctrCaseStudy() {
               Everything from scratch.
             </h2>
             <p className="text-[rgba(246,244,238,0.6)] text-base md:text-lg leading-relaxed">
-              Brand, design system, site, and company — no templates, no agency.
-              The aesthetic is tactical dark: pure black, acid green, condensed
-              type. It&apos;s built to feel like ops software, because
-              that&apos;s what the service is.
+              Brand, design system, site, and company, with no templates and no
+              agency. The first version was tactical dark: pure black, acid
+              green, condensed type. When SPCTR grew from an outbound agency into
+              an AI implementation studio, I rebuilt the brand to match: warm
+              bone paper, near-black ink, and the same loud accents turned into
+              a bento of &ldquo;eye&rdquo; marks. The eye is the idea: SPCTR sees
+              the buyers you can&apos;t.
             </p>
 
             {/* palette exhibit */}
-            <div className="bg-black border border-[rgba(246,244,238,0.1)] p-6 md:p-8">
-              <div className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-[rgba(246,244,238,0.35)] mb-5">
+            <div className="bg-[#eeede7] text-[#0c0c11] p-6 md:p-8">
+              <div className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-[rgba(12,12,17,0.5)] mb-5">
                 SPCTR design system
               </div>
               <div className="flex flex-wrap gap-4">
                 {spctrPalette.map((c) => (
                   <div key={c.hex} className="flex flex-col gap-2">
                     <div
-                      className="w-16 h-16 md:w-20 md:h-20"
+                      className="w-14 h-14 md:w-[72px] md:h-[72px] border border-[rgba(12,12,17,0.12)]"
                       style={{ backgroundColor: c.hex }}
                     />
-                    <div className="font-mono text-[10px] text-[rgba(246,244,238,0.5)]">
+                    <div className="font-mono text-[10px] text-[rgba(12,12,17,0.6)]">
                       {c.name}
                       <br />
                       {c.hex}
@@ -208,16 +214,17 @@ export default function SpctrCaseStudy() {
                   </div>
                 ))}
               </div>
-              <div className="font-mono text-[10.5px] text-[rgba(246,244,238,0.35)] mt-5">
-                Barlow Condensed 900 · Space Mono · Playfair Display
+              <div className="font-mono text-[10.5px] text-[rgba(12,12,17,0.5)] mt-5">
+                Hanken Grotesk · JetBrains Mono
               </div>
             </div>
 
             <p className="text-[rgba(246,244,238,0.6)] text-base md:text-lg leading-relaxed">
-              The site is Next.js 14 with Three.js doing the heavy lifting: an
-              interactive globe with real population-center data and arcing
-              connections, a full-screen starfield, and a lead-capture flow at
-              the end of it. Behind the site sits a real company — registered
+              The site is Next.js 14: a bento hero of animated eye marks, a
+              lead-generation page with a living-eye mascot that glances around
+              and reacts when you hover, and one question at the end of every
+              page: what do you want booked, or built? Behind the site sits a
+              real company: registered
               LLC, contracts, service agreements — because clients deserve a
               counterparty, not a landing page.
             </p>

@@ -28,7 +28,7 @@ export default function HeroSection() {
             <span className="absolute inset-0">
               I can build{" "}
               <Typewriter
-                text={["products.", "pipelines.", "sites.", "agencies.", "things."]}
+                text={["products.", "AI tools.", "pipelines.", "agents.", "things."]}
                 speed={75}
                 deleteSpeed={40}
                 waitTime={2200}
@@ -41,9 +41,9 @@ export default function HeroSection() {
         </h1>
 
         <p className="max-w-xl text-base md:text-lg text-white/60 leading-relaxed mb-10 fade-up" style={{ animationDelay: "0.4s" }}>
-          What used to take a full team and serious budget now takes one person
-          with a vision. I&apos;m building that way — and making it count for the
-          people I work with.
+          I wire AI into products people actually use: calibrated prediction
+          engines, MCP servers, lead-gen pipelines. I came up through B2B
+          marketing and analytics, so I build for the outcome, not the demo.
         </p>
 
       </div>
