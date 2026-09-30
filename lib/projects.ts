@@ -32,6 +32,7 @@ export type Project = {
   preview: Preview;
   address: string; // shown in the card's browser bar
   links: { label: string; href: string }[];
+  visit?: string; // live URL for the card's "Visit site" button; omit for local tools
   caseStudy?: CaseStudy; // undefined = has its own hand-built page (SPCTR)
 };
 
@@ -49,6 +50,7 @@ export const projects: Project[] = [
     ai: ["AI lead generation", "Custom AI builds", "AI-assisted copy"],
     preview: { kind: "iframe", src: "https://spctr.run" },
     address: "spctr.run",
+    visit: "https://spctr.run",
     links: [{ label: "Visit spctr.run", href: "https://spctr.run" }],
   },
   {
@@ -64,6 +66,7 @@ export const projects: Project[] = [
     ai: ["MCP server", "Tool use", "Calibrated model", "Web-grounded LLM"],
     preview: { kind: "iframe", src: "https://polymarket-companion-nu.vercel.app" },
     address: "hedgepredict · live",
+    visit: "https://polymarket-companion-nu.vercel.app",
     links: [
       { label: "Open the live app", href: "https://polymarket-companion-nu.vercel.app" },
     ],

@@ -55,10 +55,14 @@ function ProjectCard({ project: p, num }: { project: Project; num: string }) {
   const visibleH = Math.min(IFRAME_H * scale, PREVIEW_H);
 
   return (
-    <a
-      href={`/work/${p.slug}`}
-      className="group relative flex flex-col border border-[rgba(246,244,238,0.1)] hover:border-amber transition-colors duration-300 overflow-hidden bg-[#141414]"
-    >
+    <article className="group relative flex flex-col border border-[rgba(246,244,238,0.1)] hover:border-amber transition-colors duration-300 overflow-hidden bg-[#141414]">
+      {/* whole card opens the case study; the buttons below sit above this layer */}
+      <a
+        href={`/work/${p.slug}`}
+        aria-hidden="true"
+        tabIndex={-1}
+        className="absolute inset-0 z-[1]"
+      />
       {/* amber accent bar */}
       <div className="absolute top-0 left-0 h-[3px] w-14 bg-amber group-hover:w-full transition-all duration-500 ease-out z-10" />
 
@@ -113,7 +117,7 @@ function ProjectCard({ project: p, num }: { project: Project; num: string }) {
         {/* fade to info strip */}
         <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#0a0a0a] to-transparent pointer-events-none" />
         {/* hover overlay */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
           <span className="font-mono text-xs uppercase tracking-[0.18em] bg-[#f6f4ee] text-[#0a0a0a] px-5 py-2.5 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
             View case study →
           </span>
@@ -137,7 +141,7 @@ function ProjectCard({ project: p, num }: { project: Project; num: string }) {
 
         <p className="text-[rgba(246,244,238,0.55)] text-sm leading-relaxed mb-6">{p.summary}</p>
 
-        <ul className="mt-auto flex flex-wrap gap-2" aria-label="AI concepts">
+        <ul className="mb-7 flex flex-wrap gap-2" aria-label="AI concepts">
           {p.ai.map((t) => (
             <li
               key={t}
@@ -147,7 +151,32 @@ function ProjectCard({ project: p, num }: { project: Project; num: string }) {
             </li>
           ))}
         </ul>
+
+        {/* actions */}
+        <div className="relative z-[2] mt-auto flex flex-wrap items-center gap-3 pt-6 border-t border-[rgba(246,244,238,0.08)]">
+          {p.visit && (
+            <a
+              href={p.visit}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-bg text-fg font-mono text-[11px] uppercase tracking-[0.16em] px-4 py-2.5 border border-bg hover:bg-amber hover:border-amber hover:text-bg transition-colors duration-200"
+            >
+              Visit site <span aria-hidden="true">↗</span>
+            </a>
+          )}
+          <a
+            href={`/work/${p.slug}`}
+            className="inline-flex items-center gap-2 text-bg font-mono text-[11px] uppercase tracking-[0.16em] px-4 py-2.5 border border-[rgba(246,244,238,0.25)] hover:border-amber hover:text-amber transition-colors duration-200"
+          >
+            Case study <span aria-hidden="true">→</span>
+          </a>
+          {!p.visit && (
+            <span className="ml-auto font-mono text-[10px] uppercase tracking-[0.16em] text-[rgba(246,244,238,0.4)]">
+              Runs locally
+            </span>
+          )}
+        </div>
       </div>
-    </a>
+    </article>
   );
 }
