@@ -4,19 +4,16 @@ import Link from "next/link";
 import { useState } from "react";
 import { LEVELS, skills, type Skill } from "@/lib/skills";
 import { getProject, projects } from "@/lib/projects";
+import { TOOL_GROUPS, toolkit } from "@/lib/toolkit";
+
+const usedLabel = (key: string) => (key === "site" ? "This site" : getProject(key)?.name ?? key);
 
 const PREVIEW_COUNT = 6;
 
-// Tabs: "All" plus every project that has at least one skill
+// Tabs: "All" plus every project; they filter both the toolkit and the lessons
 const tabs = [
-  { id: "all", label: "All", count: skills.length },
-  ...projects
-    .map((p) => ({
-      id: p.slug,
-      label: p.name,
-      count: skills.filter((s) => s.project === p.slug).length,
-    }))
-    .filter((t) => t.count > 0),
+  { id: "all", label: "All" },
+  ...projects.map((p) => ({ id: p.slug, label: p.name })),
 ];
 
 export default function SkillsSection() {
@@ -42,13 +39,14 @@ export default function SkillsSection() {
             <p className="text-[rgba(246,244,238,0.55)] text-base md:text-lg leading-relaxed">
               I keep a build journal. Every time a project teaches me something
               about wiring AI into real software, it goes on this list, along
-              with how far I&apos;ve taken it. Open any one for the story.
+              with how far I&apos;ve taken it. Pick a project to see what it
+              used, or open any lesson for the story.
             </p>
           </div>
         </div>
 
         {/* controls */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-6">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <div role="tablist" aria-label="Filter skills by project" className="flex flex-wrap gap-1.5">
             {tabs.map((t) => {
               const active = tab === t.id;
@@ -68,16 +66,57 @@ export default function SkillsSection() {
                   }`}
                 >
                   {t.label}
-                  <span className={`ml-2 ${active ? "text-[rgba(10,10,10,0.5)]" : "text-[rgba(246,244,238,0.3)]"}`}>
-                    {t.count}
-                  </span>
                 </button>
               );
             })}
           </div>
 
-          {/* legend */}
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[10px] uppercase tracking-[0.16em] text-[rgba(246,244,238,0.4)]">
+        </div>
+
+        {/* toolkit */}
+        <div className="mt-10 mb-16 md:mb-20">
+          <SubHead>Toolkit</SubHead>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[rgba(246,244,238,0.08)] border border-[rgba(246,244,238,0.08)]">
+            {TOOL_GROUPS.map((g) => (
+              <div key={g.id} className="bg-[#101010] p-5 md:p-6">
+                <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber mb-4">{g.label}</div>
+                <ul className="flex flex-wrap gap-1.5">
+                  {toolkit
+                    .filter((t) => t.group === g.id)
+                    .map((t) => {
+                      const on = tab === "all" || t.used.includes(tab);
+                      return (
+                        <li key={t.name} className="group/tool relative">
+                          <span
+                            tabIndex={0}
+                            className={`block text-[13px] px-2.5 py-1.5 border transition-[opacity,border-color,color] duration-300 cursor-default outline-none ${
+                              on
+                                ? "opacity-100 text-bg border-[rgba(246,244,238,0.16)] group-hover/tool:border-amber focus-visible:border-amber"
+                                : "opacity-25 text-bg border-[rgba(246,244,238,0.08)]"
+                            }`}
+                          >
+                            {t.name}
+                          </span>
+                          {/* where it was used */}
+                          <span
+                            role="tooltip"
+                            className="pointer-events-none absolute left-0 bottom-full mb-2 z-20 whitespace-nowrap bg-bg text-fg font-mono text-[10px] uppercase tracking-[0.12em] px-2.5 py-1.5 opacity-0 translate-y-1 transition-[opacity,transform] duration-200 group-hover/tool:opacity-100 group-hover/tool:translate-y-0 group-focus-within/tool:opacity-100 group-focus-within/tool:translate-y-0"
+                          >
+                            {t.used.map(usedLabel).join(" · ")}
+                          </span>
+                        </li>
+                      );
+                    })}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* lessons */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <SubHead>What I&apos;ve learned</SubHead>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[10px] uppercase tracking-[0.16em] text-[rgba(246,244,238,0.4)] mb-5">
             {LEVELS.map((l, i) => (
               <span key={l} className="flex items-center gap-2">
                 <Meter filled={i + 1} />
@@ -99,6 +138,12 @@ export default function SkillsSection() {
             />
           ))}
         </ul>
+
+        {filtered.length === 0 && (
+          <p className="py-6 border-t border-[rgba(246,244,238,0.08)] text-sm text-[rgba(246,244,238,0.45)]">
+            No lessons logged for this one yet. The toolkit above shows what it&apos;s built with.
+          </p>
+        )}
 
         {tab === "all" && (hidden > 0 || showAll) && (
           <button
@@ -177,13 +222,13 @@ function SkillRow({
               isOpen ? "opacity-100" : "opacity-0"
             }`}
           >
-            <div className="max-w-xl">
+            <div className="max-w-2xl">
               <span className="sm:hidden flex items-center gap-2.5 font-mono text-[10.5px] uppercase tracking-[0.14em] text-amber mb-3">
                 <Meter filled={LEVELS.indexOf(s.level) + 1} />
                 {s.level}
               </span>
               <p className="text-[rgba(246,244,238,0.6)] text-sm md:text-base leading-relaxed">
-                {s.where}
+                {s.story}
               </p>
             </div>
             {project && (
@@ -212,5 +257,13 @@ function Meter({ filled }: { filled: number }) {
         />
       ))}
     </span>
+  );
+}
+
+function SubHead({ children }: { children: React.ReactNode }) {
+  return (
+    <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-[rgba(246,244,238,0.5)] mb-5">
+      {children}
+    </h3>
   );
 }
