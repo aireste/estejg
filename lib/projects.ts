@@ -37,6 +37,21 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "spctr",
+    name: "SPCTR",
+    tagline: "AI that brings in business.",
+    summary:
+      "My AI implementation studio. It books meetings with buyers who need what you sell, and builds custom AI fixes for the work eating your week. I built the brand, site and company top to bottom.",
+    year: "2025",
+    status: "Live",
+    role: "Founder — everything",
+    stack: ["Next.js 14", "TypeScript", "Tailwind"],
+    ai: ["AI lead generation", "Custom AI builds", "AI-assisted copy"],
+    preview: { kind: "iframe", src: "https://spctr.run" },
+    address: "spctr.run",
+    links: [{ label: "Visit spctr.run", href: "https://spctr.run" }],
+  },
+  {
     slug: "hedgepredict",
     name: "HedgePredict",
     tagline: "The best play on Polymarket, and why.",
@@ -125,21 +140,6 @@ export const projects: Project[] = [
         },
       ],
     },
-  },
-  {
-    slug: "spctr",
-    name: "SPCTR",
-    tagline: "AI that brings in business.",
-    summary:
-      "My AI implementation studio. It books meetings with buyers who need what you sell, and builds custom AI fixes for the work eating your week. I built the brand, site and company top to bottom.",
-    year: "2025",
-    status: "Live",
-    role: "Founder — everything",
-    stack: ["Next.js 14", "TypeScript", "Tailwind"],
-    ai: ["AI lead generation", "Custom AI builds", "AI-assisted copy"],
-    preview: { kind: "iframe", src: "https://spctr.run" },
-    address: "spctr.run",
-    links: [{ label: "Visit spctr.run", href: "https://spctr.run" }],
   },
   {
     slug: "mission-control",
