@@ -64,11 +64,11 @@ export const projects: Project[] = [
     role: "Solo — product, design, engineering",
     stack: ["Next.js 16", "TypeScript", "Tailwind v4", "Vercel"],
     ai: ["MCP server", "Tool use", "Calibrated model", "Web-grounded LLM"],
-    preview: { kind: "iframe", src: "https://polymarket-companion-nu.vercel.app" },
-    address: "hedgepredict · live",
-    visit: "https://polymarket-companion-nu.vercel.app",
+    preview: { kind: "iframe", src: "https://hedgepredict.co" },
+    address: "hedgepredict.co",
+    visit: "https://hedgepredict.co",
     links: [
-      { label: "Open the live app", href: "https://polymarket-companion-nu.vercel.app" },
+      { label: "Open the live app", href: "https://hedgepredict.co" },
     ],
     caseStudy: {
       problem: {
