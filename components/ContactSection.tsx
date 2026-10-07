@@ -19,9 +19,8 @@ export default function ContactSection() {
           </h2>
 
           <p className="text-base md:text-lg text-bg/70 max-w-xl mb-12 leading-relaxed">
-            Whether it&apos;s a full lead-gen system, a one-off site, or a wild
-            idea you can&apos;t shake — drop me a line. I read everything, and I
-            reply fast.
+            A role, a project, or an idea you can&apos;t shake — drop me a
+            line. I read everything, and I reply fast.
           </p>
 
           {/* primary email */}
@@ -33,8 +32,23 @@ export default function ContactSection() {
             <span className="text-xl">↗</span>
           </a>
 
-          {/* contact grid */}
-          <div className="pt-10 border-t border-bg/15" />
+          {/* elsewhere */}
+          <div className="pt-8 border-t border-bg/15 flex flex-wrap gap-x-8 gap-y-3">
+            {[
+              { label: "LinkedIn", href: "https://linkedin.com/in/estebanguerra" },
+              { label: "GitHub", href: "https://github.com/aireste" },
+            ].map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-[11px] uppercase tracking-[0.18em] text-bg/70 hover:text-amber transition-colors"
+              >
+                {l.label} <span aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
         </div>
 
         {/* footer strip */}

@@ -2,7 +2,12 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { projects, type Project } from "@/lib/projects";
+
+// Live products get the full card; local tools get a compact row underneath
+const featured = projects.filter((p) => p.status === "Live");
+const tools = projects.filter((p) => p.status !== "Live");
 
 const IFRAME_W = 1440;
 const IFRAME_H = 900;
@@ -20,17 +25,42 @@ export default function WorkSection() {
               My work<span className="amber-text">.</span>
             </h2>
             <p className="text-[rgba(246,244,238,0.55)] text-base md:text-lg leading-relaxed max-w-xl mt-6">
-              Real products, built with AI end to end. Each one has a write-up:
+              Two live products, built with AI end to end. Each has a write-up:
               what I built, how the pieces connect, and what broke along the way.
             </p>
           </div>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 items-start">
-          {projects.map((p, i) => (
+          {featured.map((p, i) => (
             <ProjectCard key={p.slug} project={p} num={String(i + 1).padStart(2, "0")} />
           ))}
         </div>
+
+        {/* local tools */}
+        <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-[rgba(246,244,238,0.5)] mt-16 md:mt-20 mb-5">
+          Tools I built for my own workflow
+        </h3>
+        <ul className="border-b border-[rgba(246,244,238,0.08)]">
+          {tools.map((p) => (
+            <li key={p.slug} className="border-t border-[rgba(246,244,238,0.08)]">
+              <Link
+                href={`/work/${p.slug}`}
+                className="group grid grid-cols-[1fr_auto] md:grid-cols-[14rem_1fr_auto] items-baseline gap-x-8 gap-y-1 py-5"
+              >
+                <span className="font-display font-medium text-lg md:text-xl tracking-tight text-bg group-hover:text-amber transition-colors duration-200">
+                  {p.name}
+                </span>
+                <span className="col-span-2 md:col-span-1 row-start-2 md:row-start-auto text-sm md:text-base text-[rgba(246,244,238,0.55)]">
+                  {p.tagline}
+                </span>
+                <span className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-[rgba(246,244,238,0.55)] group-hover:text-amber transition-colors duration-200">
+                  Case study <span aria-hidden="true">→</span>
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

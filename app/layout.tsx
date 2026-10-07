@@ -10,8 +10,18 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Esteban Guerra",
-  description: "I have ideas. I build them.",
+  metadataBase: new URL("https://estejg.com"),
+  title: "Esteban Guerra — AI builder",
+  description:
+    "I wire AI into products people actually use: calibrated prediction engines, MCP servers, lead-gen pipelines. B2B marketing and analytics background.",
+  openGraph: {
+    title: "Esteban Guerra — AI builder",
+    description:
+      "I wire AI into products people actually use: calibrated prediction engines, MCP servers, lead-gen pipelines.",
+    url: "https://estejg.com",
+    siteName: "Esteban Guerra",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
