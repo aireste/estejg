@@ -53,9 +53,12 @@ export default function ContactSection() {
 
         {/* footer strip */}
         <div className="mt-24 pt-8 border-t border-bg/15 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-bg/50">
+          <a
+            href="/guerra-digital"
+            className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-bg/50 hover:text-amber transition-colors"
+          >
             © {new Date().getFullYear()} Guerra Digital LLC
-          </div>
+          </a>
           <div className="flex items-center gap-6">
             <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-bg/50">
               Nashville, TN

@@ -25,6 +25,11 @@ function MenuButton({
 }) {
   const handleClick = () => {
     onClose();
+    // Page routes (e.g. /guerra-digital) navigate; anchors scroll.
+    if (href.startsWith("/")) {
+      window.location.href = href;
+      return;
+    }
     setTimeout(() => {
       const el = document.querySelector(href);
       el?.scrollIntoView({ behavior: "smooth" });
@@ -53,6 +58,7 @@ const defaultItems: MenuItem[] = [
   { label: "About",   href: "#about" },
   { label: "Work",    href: "#work" },
   { label: "Toolkit", href: "#toolkit" },
+  { label: "Company", href: "/guerra-digital" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -86,7 +92,7 @@ export default function FloatingMenu({ items = defaultItems }: { items?: MenuIte
         style={{ cursor: isOpen ? "default" : "pointer" }}
         animate={{
           width: isOpen ? 240 : 130,
-          height: isOpen ? 240 : 44,
+          height: isOpen ? 286 : 44,
           borderRadius: isOpen ? 32 : 72,
           scale: 1,
         }}

@@ -48,7 +48,7 @@ const engineSteps = [
 const meta = [
   { label: "Role", value: "Founder — everything" },
   { label: "Stack", value: "Next.js 14 · TypeScript · Tailwind" },
-  { label: "Year", value: "2025 — present" },
+  { label: "Year", value: "2026 — present" },
 ];
 
 export default function SpctrCaseStudy() {

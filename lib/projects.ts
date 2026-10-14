@@ -43,7 +43,7 @@ export const projects: Project[] = [
     tagline: "AI that brings in business.",
     summary:
       "My AI implementation studio. It books meetings with buyers who need what you sell, and builds custom AI fixes for the work eating your week. I built the brand, site and company top to bottom.",
-    year: "2025",
+    year: "2026",
     status: "Live",
     role: "Founder — everything",
     stack: ["Next.js 14", "TypeScript", "Tailwind"],
