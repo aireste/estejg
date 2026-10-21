@@ -220,6 +220,83 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "crm-audit",
+    name: "CRM Audit Engine",
+    tagline: "Finds the bad records in a CRM and proves it before touching one.",
+    summary:
+      "A tool that reads a HubSpot portal, counts the junk, duplicates and orphaned records with plain code, and gives back one score plus an undoable fix list. Built and tested on made-up data and a free HubSpot test account; not yet run on a client's portal.",
+    year: "2026",
+    status: "Local tool",
+    role: "Solo — design + engineering",
+    stack: ["Python (stdlib)", "SQLite", "HubSpot API", "Headless Chrome"],
+    ai: ["Code counts, AI explains", "Independent test data", "Mutation testing", "Model bake-off"],
+    preview: {
+      kind: "image",
+      src: "/work/crm-audit.jpg",
+      alt: "Sample CRM audit report for a made-up company: a usable data score of 68 percent, 3,802 of 5,606 contacts usable, with the reasons the rest are not",
+    },
+    address: "Runs on my laptop",
+    links: [],
+    caseStudy: {
+      problem: {
+        heading: "Nobody trusts a cleanup they can't check.",
+        body: [
+          "HubSpot portals fill up with junk emails, duplicates and contacts owned by people who left. At renewal, the company pays for every marketing contact in there. Most audits I saw were a person eyeballing exported lists.",
+          "I wanted a tool that counts the mess with code, shows its working, and makes every fix undoable. Then I wanted evidence that it was right before anyone trusted it.",
+        ],
+      },
+      build: {
+        heading: "Nine rules, a score and an undo button.",
+        body: [
+          "The engine copies a portal into a local database and runs nine checks, sorted by risk. Some changes are fully reversible, like moving a contact to non-marketing. Some need an owner's review, like a company with no contacts and no activity in a year. Some only a person should decide, like two contacts who might be the same human.",
+          "Here is the kind of thing it catches, all made up: a contact whose email is test@example.com. Two records named Dana Reyes at the same company with different emails. A contact assigned to a salesperson who left in March. On a made-up company called Northwind Supply, the output is one number: 68% of contacts are usable today, 3,802 of 5,606.",
+          "Every repair takes a checkpoint first and can be undone. Merges are never automatic, because a merge can't be undone.",
+          "Where it stands: built and tested on made-up data and a free HubSpot test account. It has not run on a client's portal yet.",
+        ],
+      },
+      architecture: {
+        heading: "Code counts. AI only explains.",
+        intro:
+          "Every number comes from plain code. A model never decides what's bad; at most it writes the explanation from numbers the code already computed.",
+        flow: [
+          { label: "HubSpot, read-only", detail: "Pull contacts, companies and owners into a local copy" },
+          { label: "Local database", detail: "A SQLite file on my laptop; nothing is uploaded anywhere" },
+          { label: "Nine rules", detail: "Each one has a plain-English definition written before its code" },
+          { label: "Report and fix list", detail: "A score, the reasons, and exact record lists to review" },
+          { label: "Repair, with undo", detail: "A checkpoint first, then only the changes a person approves" },
+        ],
+      },
+      concepts: [
+        {
+          name: "A test that knows the answer",
+          body: "A separate agent wrote a messy dataset with a hidden answer key and never saw my code. That's how I found mistakes my own tests couldn't see.",
+        },
+        {
+          name: "Break the code on purpose",
+          body: "For each rule I make the code wrong on purpose and check that the tests turn red. A test that can't fail isn't testing anything.",
+        },
+        {
+          name: "Say what you didn't prove",
+          body: "Three of the nine rules were confirmed on a real HubSpot test account. The other six depend on dates HubSpot sets itself, so I can only show them on made-up data. The report says so.",
+        },
+      ],
+      broke: [
+        {
+          what: "My fake HubSpot agreed with my own wrong guess.",
+          lesson: "I had assumed where HubSpot marks a field read-only, and the fake copied the assumption, so every test passed. One look at a real response showed it was wrong, before anything was written.",
+        },
+        {
+          what: "The 'empty company' rule flagged brand-new companies.",
+          lesson: "On a fresh made-up dataset about half its flags were wrong: a company created last month with nothing logged looked abandoned. I fixed the definition first, then the code, then re-measured on new data.",
+        },
+        {
+          what: "I tried an AI classifier for 'is this the same person?' and it was a coin flip.",
+          lesson: "With only numbers allowed in (no names or emails), neither it nor my own scoring could tell two people from one. I wrote the result down and didn't ship it. It's the right tool in HedgePredict, where the inputs are numbers.",
+        },
+      ],
+    },
+  },
+  {
     slug: "mission-control",
     name: "Mission Control",
     tagline: "Claude is my project manager.",
