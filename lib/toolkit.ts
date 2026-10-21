@@ -19,7 +19,7 @@ export const TOOL_GROUPS: { id: ToolGroup; label: string }[] = [
 export const toolkit: Tool[] = [
   // AI
   { name: "Claude API (Opus + Sonnet)", group: "AI", used: ["hedgepredict"] },
-  { name: "Claude Code", group: "AI", used: ["spctr", "hedgepredict", "mission-control", "taste-vault", "site"] },
+  { name: "Claude Code", group: "AI", used: ["spctr", "hedgepredict", "claude-hq", "mission-control", "taste-vault", "site"] },
   { name: "MCP servers", group: "AI", used: ["hedgepredict"] },
   { name: "Tool use", group: "AI", used: ["hedgepredict"] },
   { name: "Structured outputs", group: "AI", used: ["hedgepredict"] },
@@ -34,12 +34,14 @@ export const toolkit: Tool[] = [
   { name: "Tailwind CSS", group: "Build", used: ["spctr", "hedgepredict", "site"] },
   { name: "Three.js + WebGL shaders", group: "Build", used: ["spctr", "site"] },
   { name: "Framer Motion", group: "Build", used: ["site"] },
-  { name: "Python", group: "Build", used: ["mission-control", "taste-vault"] },
+  { name: "Python", group: "Build", used: ["claude-hq", "mission-control", "taste-vault"] },
   { name: "Vanilla JS", group: "Build", used: ["mission-control", "taste-vault"] },
 
   // Ship
   { name: "Vercel", group: "Ship", used: ["spctr", "hedgepredict", "site"] },
-  { name: "Git + GitHub", group: "Ship", used: ["spctr", "hedgepredict", "mission-control", "taste-vault", "site"] },
+  { name: "Git + GitHub", group: "Ship", used: ["spctr", "hedgepredict", "claude-hq", "mission-control", "taste-vault", "site"] },
+  { name: "Branch protection + deploy keys", group: "Ship", used: ["spctr", "claude-hq"] },
+  { name: "Linux server (DigitalOcean, tmux, systemd)", group: "Ship", used: ["claude-hq"] },
   { name: "Env vars + secrets", group: "Ship", used: ["hedgepredict"] },
   { name: "Custom domains + DNS", group: "Ship", used: ["spctr", "site"] },
   { name: "Rate limiting", group: "Ship", used: ["hedgepredict"] },
@@ -48,5 +50,6 @@ export const toolkit: Tool[] = [
   { name: "Polymarket APIs", group: "Data", used: ["hedgepredict"] },
   { name: "Zod validation", group: "Data", used: ["hedgepredict"] },
   { name: "Formspree", group: "Data", used: ["spctr"] },
+  { name: "Telegram bot API", group: "Data", used: ["claude-hq"] },
   { name: "JSON file stores", group: "Data", used: ["mission-control", "taste-vault"] },
 ];
