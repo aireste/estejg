@@ -25,7 +25,7 @@ export type Project = {
   tagline: string;
   summary: string;
   year: string;
-  status: "Live" | "Local tool";
+  status: "Live" | "Local tool" | "Private system";
   role: string;
   stack: string[];
   ai: string[]; // AI concepts shown as tags on the card
@@ -140,6 +140,81 @@ export const projects: Project[] = [
         {
           what: "On the phone, the details sheet opened offscreen after scrolling.",
           lesson: "A leftover transform from a fade-in animation changed what 'fixed' anchors to. Test the deployed site, scrolled down, on a real device.",
+        },
+      ],
+    },
+  },
+  {
+    slug: "claude-hq",
+    name: "Claude HQ",
+    tagline: "Claude Code that keeps working when I close my laptop.",
+    summary:
+      "A small server runs Claude Code around the clock. I message it from Telegram, it works on a branch while I'm away, and nothing goes live until I approve it with a tap.",
+    year: "2026",
+    status: "Private system",
+    role: "Solo — design + engineering",
+    stack: ["Python", "Bash", "systemd + tmux", "Telegram bot", "GitHub"],
+    ai: ["Claude Code as operator", "Task queue", "Human approval gates", "Shared memory in files"],
+    preview: {
+      kind: "image",
+      src: "/work/claude-hq.jpg",
+      alt: "Diagram: a Telegram topic per project talks to Claude sessions on a server, which push branches to GitHub; I review and merge. Anything I can undo runs alone; anything I can't waits for my tap.",
+    },
+    address: "Private server",
+    links: [],
+    caseStudy: {
+      problem: {
+        heading: "I wanted Claude to keep working when I walk away.",
+        body: [
+          "I build with Claude Code in a terminal, and it stops the moment I close my laptop. I wanted it to keep going on a small server I own, reachable from my phone, without handing it the keys to everything.",
+          "Running it all day is the easy part. The hard part is deciding what it may do on its own and what has to wait for me.",
+        ],
+      },
+      build: {
+        heading: "A server, a chat app and one rule.",
+        body: [
+          "A cheap cloud server runs one Claude Code session per project. A Telegram bot connects them: each project gets its own topic in one group chat, so talking to the right Claude means opening the right topic.",
+          "Longer jobs go through a queue. I write a task as a short file with checkable steps. A runner starts it on its own git branch, confirms each step really changed something, and pings me with buttons when it's done or needs a decision. A 7 AM message tells me what to do first.",
+          "The rule is simple: anything I can undo, it does at full speed. Anything I can't (sending to people, merging to main, spending money, deleting work) waits for my tap. Silence means hold, never yes.",
+        ],
+      },
+      architecture: {
+        heading: "Branches in, one human merge out.",
+        intro:
+          "Everything the server produces lands on a branch. Only I can put it on main.",
+        flow: [
+          { label: "Phone", detail: "A Telegram topic per project, with buttons for approvals" },
+          { label: "Server", detail: "One Claude session per project folder, plus a task queue and a runner" },
+          { label: "GitHub", detail: "Work arrives on branches; main is protected and needs my review" },
+          { label: "Laptop", detail: "I open the link in the ping, check the result, and click merge" },
+        ],
+      },
+      concepts: [
+        {
+          name: "Reversible or not",
+          body: "I sort every action by one question: can I undo it? That decides what runs alone and what stops for me, and it's easier to trust than a long list of rules.",
+        },
+        {
+          name: "Files are the shared memory",
+          body: "My laptop Claude and the server Claude never share a conversation. They share written notes in a repo: what we decided, what's running, what's next. If it isn't written down, it doesn't travel.",
+        },
+        {
+          name: "Evidence over memory",
+          body: "Before it says something is merged or running, the agent checks the real source and says how it checked. Notes are a map, not the territory.",
+        },
+      ],
+      broke: [
+        {
+          what: "One careless cleanup command killed every running session at once.",
+          lesson: "I close things by their exact ID now, never by pattern.",
+        },
+        {
+          what: "A new session reused an old window ID and got attached to a dead topic, so nothing appeared in Telegram.",
+          lesson: "Check that an ID is free before using it, and clear stale records first.",
+        },
+        {
+          what: "Scheduled jobs I had switched on never actually started, so the 'all quiet' signal was silence, not health.",
+          lesson: "After enabling anything scheduled, confirm the real next-run time.",
         },
       ],
     },
