@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProject, projects } from "@/lib/projects";
+import SiftDemoHero from "@/components/SiftDemoHero";
 
 // SPCTR has its own hand-built page at /work/spctr, so only projects
 // with case-study data are generated here.
@@ -104,7 +105,13 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           </p>
         )}
 
-        {p.preview.kind === "image" && (
+        {p.preview.kind === "image" && cs.heroDemo === "sift" && (
+          <div className="mt-14 fade-up" style={{ animationDelay: "0.5s" }}>
+            <SiftDemoHero src={p.preview.src} alt={p.preview.alt} />
+          </div>
+        )}
+
+        {p.preview.kind === "image" && !cs.heroDemo && (
           <div
             className="relative mt-14 aspect-[16/10] border border-[rgba(246,244,238,0.1)] overflow-hidden fade-up"
             style={{ animationDelay: "0.5s" }}
