@@ -17,6 +17,7 @@ export type CaseStudy = {
   concepts: { name: string; body: string }[];
   broke: { what: string; lesson: string }[];
   credit?: string;
+  heroDemo?: "sift"; // play a scripted demo over the preview image on the case study (the image stays the poster)
 };
 
 export type Project = {
@@ -315,6 +316,7 @@ export const projects: Project[] = [
     address: "Runs on my laptop",
     links: [],
     caseStudy: {
+      heroDemo: "sift",
       problem: {
         heading: "A few hundred names shouldn't need four subscriptions.",
         body: [
