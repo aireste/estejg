@@ -78,8 +78,8 @@ export type Story = {
 };
 
 export const siftStory: Story = {
-  durationMs: 19600,
-  fadeOutAt: 19000,
+  durationMs: 19000,
+  fadeOutAt: 18400,
   ariaLabel:
     "Animated demo of Sift on practice data. A plain request is typed, Sift finds 1,980 businesses, 412 pass the free checks and 371 are small enough. A sheet asks for a yes before spending 166 Apollo credits, the yes is pressed, owners are found and emails verified. In Review one lead is approved and one rejected with a reason. It ends with 38 verified owners saved to an unsent draft. Nothing was sent.",
   campaign: {

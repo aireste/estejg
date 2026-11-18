@@ -3,7 +3,7 @@
 import type { Story } from "./storyboard";
 
 export type StepState = "wait" | "on" | "done";
-export type GlintMode = "still" | "work" | "ask" | "happy";
+export type GlintMode = "still" | "work"; // work = blinks now and then
 export type LeadState = "hidden" | "in" | "armed" | "out";
 export type PointerPhase = "off" | "start" | "there" | "leave";
 export type Screen = "brief" | "run" | "review" | "done";
@@ -74,7 +74,7 @@ export function frameAt(s: Story, t: number): Frame {
   }
 
   const anyOn = steps.some((x, i) => x === "on" && i < s.steps.length - 2);
-  const glint: GlintMode = screen === "done" ? "happy" : askOpen ? "ask" : anyOn ? "work" : "still";
+  const glint: GlintMode = anyOn ? "work" : "still"; // the finish shows the plain mark, at rest
 
   let caption = 0;
   s.captions.forEach((c, i) => {

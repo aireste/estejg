@@ -31,7 +31,9 @@ export function useStoryClock({
     if (!running) return;
     let raf = 0;
     let last = -1;
+    let lastWall = Date.now();
     const tick = (now: number) => {
+      lastWall = Date.now();
       if (last >= 0) {
         t.current += Math.min(now - last, maxStepMs);
         if (t.current >= durationMs) {
@@ -44,20 +46,44 @@ export function useStoryClock({
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    // Watchdog: some browsers (notably iOS Safari after an app switch) can drop a pending
+    // frame callback without firing any event. If the page is visible and no frame has
+    // ticked for a while, re-arm the loop. The next tick starts fresh, so time never jumps.
+    const dog = window.setInterval(() => {
+      if (document.visibilityState === "visible" && Date.now() - lastWall > 1200) {
+        cancelAnimationFrame(raf);
+        last = -1;
+        lastWall = Date.now();
+        raf = requestAnimationFrame(tick);
+      }
+    }, 1000);
+    // coming back from the back/forward cache or a frozen tab: re-arm the same way
+    const wake = () => {
+      cancelAnimationFrame(raf);
+      last = -1;
+      raf = requestAnimationFrame(tick);
+    };
+    window.addEventListener("pageshow", wake);
+    document.addEventListener("resume", wake);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearInterval(dog);
+      window.removeEventListener("pageshow", wake);
+      document.removeEventListener("resume", wake);
+    };
   }, [running, durationMs, maxStepMs]);
 }
 
-/** True while the element is at least `threshold` visible. */
-export function useInView(ref: RefObject<Element>, threshold = 0.2) {
+/** False only once the element is fully off-screen (plus a margin), so a half-visible demo keeps playing. */
+export function useInView(ref: RefObject<Element>, rootMargin = "120px 0px") {
   const [inView, setInView] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof IntersectionObserver === "undefined") return;
-    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold });
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0, rootMargin });
     io.observe(el);
     return () => io.disconnect();
-  }, [ref, threshold]);
+  }, [ref, rootMargin]);
   return inView;
 }
 

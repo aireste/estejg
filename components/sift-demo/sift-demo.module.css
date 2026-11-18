@@ -137,36 +137,8 @@
 .glid {
   transition: transform 420ms var(--sprung);
 }
-.gpw {
-  transform: translate(-37px, -18px);
-  transition: transform 460ms var(--sprung);
-}
-.gpu {
-  transition: transform 380ms var(--sprung);
-  transform-box: fill-box;
-  transform-origin: center;
-}
 .glint[data-mode="work"] .glid {
   animation: gblink 2.6s ease-in-out infinite;
-}
-.glint[data-mode="ask"] .glid {
-  transform: scale(1.1);
-}
-.glint[data-mode="ask"] .gpw {
-  transform: translate(0, 0);
-}
-.glint[data-mode="ask"] .gpu {
-  transform: scale(0.55);
-}
-/* happy squint: the eyeball lifts into an arch (the pupil hole grows and drops to cut the bottom away) */
-.glint[data-mode="happy"] .glid {
-  transform: translateY(-4px) scale(1, 0.74);
-}
-.glint[data-mode="happy"] .gpw {
-  transform: translate(0, 84px);
-}
-.glint[data-mode="happy"] .gpu {
-  transform: scale(2.3);
 }
 @keyframes gblink {
   0%,
