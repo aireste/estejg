@@ -71,7 +71,7 @@ export default function SiftDemo({
         aria-label={story.ariaLabel}
         onPointerEnter={(e) => e.pointerType === "mouse" && setHover(true)}
         onPointerLeave={() => setHover(false)}
-        onFocus={() => setFocus(true)}
+        onFocus={(e) => setFocus(e.currentTarget.matches(":focus-visible"))} // keyboard focus pauses; a click or tap does not
         onBlur={() => setFocus(false)}
       >
         {poster}
@@ -89,7 +89,6 @@ export default function SiftDemo({
           <button
             type="button"
             className={s.ctl}
-            aria-pressed={userPaused}
             aria-label={userPaused ? "Play the demo" : "Pause the demo"}
             onClick={() => setUserPaused((p) => !p)}
           >
