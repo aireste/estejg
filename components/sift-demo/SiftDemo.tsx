@@ -33,9 +33,9 @@ export default function SiftDemo({
   const inView = useInView(frameRef);
   const visible = usePageVisible();
   const [userPaused, setUserPaused] = useState(false);
-  const [hover, setHover] = useState(false);
-  const [focus, setFocus] = useState(false);
-  const paused = userPaused || hover || focus;
+  // Only the Pause button, being off-screen and a hidden tab stop it. Hover and focus
+  // pauses were removed (2026-11-18): a resting cursor made the demo look frozen.
+  const paused = userPaused;
 
   const [frame, setFrame] = useState<Frame>(() => frameAt(story, 0));
   const [loop, setLoop] = useState(0);
@@ -44,6 +44,10 @@ export default function SiftDemo({
 
   const onFrame = useCallback(
     (t: number, l: number) => {
+      // the playhead, in tenths of a second, as data-t on the window (cheap, no layout); handy for tests
+      const el = frameRef.current;
+      const tenth = String(Math.floor(t / 100) + l * 1000);
+      if (el && el.dataset.t !== tenth) el.dataset.t = tenth;
       if (l !== lastLoop.current) {
         lastLoop.current = l;
         setLoop(l);
@@ -66,13 +70,8 @@ export default function SiftDemo({
       <div
         ref={frameRef}
         className={s.frame}
-        tabIndex={0}
         role="img"
         aria-label={story.ariaLabel}
-        onPointerEnter={(e) => e.pointerType === "mouse" && setHover(true)}
-        onPointerLeave={() => setHover(false)}
-        onFocus={(e) => setFocus(e.currentTarget.matches(":focus-visible"))} // keyboard focus pauses; a click or tap does not
-        onBlur={() => setFocus(false)}
       >
         {poster}
         <div
@@ -310,7 +309,7 @@ function Scene({ story, f }: { story: Story; f: Frame }) {
         <section className={s.screen} data-show={f.screen === "done" ? "1" : "0"}>
           {f.screen === "done" && (
             <div className={s.done}>
-              <Glint mode="happy" className={s.doneGlint} />
+              <Glint mode={f.glint} className={s.doneGlint} />
               <p className={s.doneK}>{finish.kicker}</p>
               <div className={s.doneRow}>
                 <RollingNumber value={finish.value} className={s.doneN} />
