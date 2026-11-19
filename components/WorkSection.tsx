@@ -5,10 +5,9 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { projects, type Project } from "@/lib/projects";
 
-// Live products and anything marked featured get the full card; other local tools get a compact row underneath
-const isFeatured = (p: Project) => p.status === "Live" || p.featured === true;
-const featured = projects.filter(isFeatured);
-const tools = projects.filter((p) => !isFeatured(p));
+// Live products get the full card; local tools get a compact row underneath (the featured tool leads, with a thumbnail)
+const featured = projects.filter((p) => p.status === "Live");
+const tools = projects.filter((p) => p.status !== "Live");
 
 const IFRAME_W = 1440;
 const IFRAME_H = 900;
@@ -26,9 +25,8 @@ export default function WorkSection() {
               My work<span className="amber-text">.</span>
             </h2>
             <p className="text-[rgba(246,244,238,0.55)] text-base md:text-lg leading-relaxed max-w-xl mt-6">
-              Start with Sift, the tool behind my lead generation work, then the two live
-              products I built end to end with AI. Each has a write-up: what I built, how
-              the pieces connect, and what broke along the way.
+              Two live products, built with AI end to end. Each has a write-up:
+              what I built, how the pieces connect, and what broke along the way.
             </p>
           </div>
         </div>
@@ -44,7 +42,37 @@ export default function WorkSection() {
           Tools I built for my own workflow
         </h3>
         <ul className="border-b border-[rgba(246,244,238,0.08)]">
-          {tools.map((p) => (
+          {tools.map((p) =>
+            p.featured && p.preview.kind === "image" ? (
+              <li key={p.slug} className="border-t border-[rgba(246,244,238,0.08)]">
+                <Link
+                  href={`/work/${p.slug}`}
+                  className="group grid md:grid-cols-[18rem_1fr] items-center gap-x-8 gap-y-4 py-7"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden border border-[rgba(246,244,238,0.1)] group-hover:border-[rgba(246,244,238,0.3)] transition-colors duration-300">
+                    <Image
+                      src={p.preview.src}
+                      alt={p.preview.alt}
+                      fill
+                      sizes="(min-width: 768px) 288px, 100vw"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                  <div>
+                    <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-amber">
+                      Lead tool · behind SPCTR&apos;s lead generation
+                    </span>
+                    <h4 className="font-display font-bold text-2xl md:text-3xl tracking-tight text-bg mt-2 group-hover:text-amber transition-colors duration-200">
+                      {p.name}
+                    </h4>
+                    <p className="text-sm md:text-base text-[rgba(246,244,238,0.65)] mt-2 max-w-xl">{p.tagline}</p>
+                    <span className="inline-block font-mono text-[10.5px] uppercase tracking-[0.16em] text-[rgba(246,244,238,0.55)] group-hover:text-amber transition-colors duration-200 mt-4">
+                      Case study <span aria-hidden="true">→</span>
+                    </span>
+                  </div>
+                </Link>
+              </li>
+            ) : (
             <li key={p.slug} className="border-t border-[rgba(246,244,238,0.08)]">
               <Link
                 href={`/work/${p.slug}`}
@@ -61,7 +89,8 @@ export default function WorkSection() {
                 </span>
               </Link>
             </li>
-          ))}
+            )
+          )}
         </ul>
       </div>
     </section>
