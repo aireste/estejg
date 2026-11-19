@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import Link from "next/link";
 import { projects, type Project } from "@/lib/projects";
 
@@ -229,87 +228,30 @@ function ProjectCard({ project: p, num }: { project: Project; num: string }) {
   );
 }
 
-// The tools list: plain rows. On a mouse, hovering (or tabbing to) a row shows that tool's picture next to
-// the cursor; leaving hides it. On touch screens, where there is no hover, each row carries a small thumbnail.
+// The tools list: plain text rows. Click a row and it opens downward to show a picture, a short summary and a
+// link to the case study; click again (or open another) and it closes. One open at a time.
 function ToolsList({ tools }: { tools: Project[] }) {
-  const [active, setActive] = useState<string | null>(null);
-  const [canHover, setCanHover] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const boxRef = useRef<HTMLDivElement>(null);
-  const target = useRef({ x: 0, y: 0 });
-  const cur = useRef({ x: 0, y: 0 });
-  const reduce = useRef(false);
-  const BOX_W = 352;
-  const BOX_H = 220;
-
-  useEffect(() => {
-    setMounted(true);
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const onChange = () => setCanHover(mq.matches);
-    onChange();
-    mq.addEventListener("change", onChange);
-    reduce.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-
-  // ease the picture toward the cursor, only while something is hovered (transform only, so it stays smooth)
-  useEffect(() => {
-    if (!active || !canHover) return;
-    let id = 0;
-    const tick = () => {
-      const k = reduce.current ? 1 : 0.2;
-      cur.current.x += (target.current.x - cur.current.x) * k;
-      cur.current.y += (target.current.y - cur.current.y) * k;
-      if (boxRef.current) boxRef.current.style.transform = `translate3d(${cur.current.x}px, ${cur.current.y}px, 0)`;
-      id = requestAnimationFrame(tick);
-    };
-    id = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(id);
-  }, [active, canHover]);
-
-  const place = (x: number, y: number, snap: boolean) => {
-    const W = window.innerWidth;
-    const H = window.innerHeight;
-    const px = Math.min(x + 28, W - BOX_W - 16);
-    const py = Math.max(16, Math.min(y - BOX_H / 2, H - BOX_H - 16));
-    target.current = { x: px, y: py };
-    if (snap) cur.current = { x: px, y: py };
-  };
-
-  const show = (slug: string, e: React.MouseEvent | React.FocusEvent) => {
-    if (!canHover) return;
-    if ("clientX" in e) place(e.clientX, e.clientY, active === null);
-    else {
-      const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
-      place(r.right - BOX_W - 40, r.top + r.height / 2, true);
-    }
-    setActive(slug);
-  };
-
-  const withImage = tools.filter((p) => p.preview.kind === "image");
+  const [open, setOpen] = useState<string | null>(null);
 
   return (
-    <>
-      <ul
-        className="border-b border-[rgba(246,244,238,0.08)]"
-        onMouseLeave={() => setActive(null)}
-        onMouseMove={(e) => active && place(e.clientX, e.clientY, false)}
-      >
-        {tools.map((p) => (
+    <ul className="border-b border-[rgba(246,244,238,0.08)]">
+      {tools.map((p) => {
+        const isOpen = open === p.slug;
+        const panelId = `tool-${p.slug}-panel`;
+        return (
           <li key={p.slug} className="border-t border-[rgba(246,244,238,0.08)]">
-            <Link
-              href={`/work/${p.slug}`}
-              onMouseEnter={(e) => show(p.slug, e)}
-              onFocus={(e) => show(p.slug, e)}
-              onBlur={() => setActive(null)}
-              className="group grid grid-cols-[1fr_auto] md:grid-cols-[14rem_1fr_auto] [@media(hover:none)]:max-md:grid-cols-[5rem_1fr_auto] items-baseline gap-x-4 md:gap-x-8 gap-y-1 py-5"
+            <button
+              type="button"
+              onClick={() => setOpen(isOpen ? null : p.slug)}
+              aria-expanded={isOpen}
+              aria-controls={panelId}
+              className="group grid w-full grid-cols-[1fr_auto] md:grid-cols-[14rem_1fr_auto] items-baseline gap-x-4 md:gap-x-8 gap-y-1 py-5 text-left"
             >
-              {p.preview.kind === "image" && (
-                <span className="relative hidden [@media(hover:none)]:max-md:block w-20 h-12 overflow-hidden border border-[rgba(246,244,238,0.1)] row-span-2 self-center">
-                  <Image src={p.preview.src} alt="" fill sizes="80px" className="object-cover object-top" />
-                </span>
-              )}
-              <span className="font-display font-medium text-lg md:text-xl tracking-tight text-bg group-hover:text-amber transition-colors duration-200">
+              <span
+                className={`font-display font-medium text-lg md:text-xl tracking-tight transition-colors duration-200 ${
+                  isOpen ? "text-amber" : "text-bg group-hover:text-amber"
+                }`}
+              >
                 {p.name}
                 {p.featured && (
                   <span className="ml-3 align-middle font-mono text-[10px] uppercase tracking-[0.16em] text-amber">
@@ -320,42 +262,78 @@ function ToolsList({ tools }: { tools: Project[] }) {
               <span className="col-span-2 md:col-span-1 row-start-2 md:row-start-auto text-sm md:text-base text-[rgba(246,244,238,0.55)]">
                 {p.tagline}
               </span>
-              <span className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-[rgba(246,244,238,0.55)] group-hover:text-amber transition-colors duration-200">
-                Case study <span aria-hidden="true">→</span>
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-
-      {mounted &&
-        canHover &&
-        createPortal(
-          <div
-            ref={boxRef}
-            aria-hidden="true"
-            className={`pointer-events-none fixed left-0 top-0 z-40 border border-[rgba(246,244,238,0.18)] bg-[#141414] shadow-2xl overflow-hidden transition-opacity duration-200 motion-reduce:transition-none ${
-              active ? "opacity-100" : "opacity-0"
-            }`}
-            style={{ width: BOX_W, height: BOX_H }}
-          >
-            {withImage.map((p) =>
-              p.preview.kind === "image" ? (
-                <Image
-                  key={p.slug}
-                  src={p.preview.src}
-                  alt=""
-                  fill
-                  sizes="352px"
-                  className={`object-cover object-top transition-opacity duration-150 motion-reduce:transition-none ${
-                    active === p.slug ? "opacity-100" : "opacity-0"
+              <span
+                className={`font-mono text-[10.5px] uppercase tracking-[0.16em] flex items-center gap-2.5 transition-colors duration-200 ${
+                  isOpen ? "text-amber" : "text-[rgba(246,244,238,0.55)] group-hover:text-bg"
+                }`}
+              >
+                {isOpen ? "Close" : "Details"}
+                <span
+                  aria-hidden="true"
+                  className={`relative w-3 h-3 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+                    isOpen ? "rotate-45" : ""
                   }`}
-                />
-              ) : null,
-            )}
-          </div>,
-          document.body,
-        )}
-    </>
+                >
+                  <span className="absolute top-1/2 left-0 w-3 h-px bg-current" />
+                  <span className="absolute left-1/2 top-0 h-3 w-px bg-current" />
+                </span>
+              </span>
+            </button>
+
+            {/* grid-rows 0fr to 1fr animates the panel to its content height */}
+            <div
+              id={panelId}
+              role="region"
+              aria-label={`${p.name} details`}
+              className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+                isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+              }`}
+            >
+              <div className="overflow-hidden">
+                <div
+                  className={`grid gap-6 md:grid-cols-[20rem_1fr] items-start pb-7 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+                    isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
+                  }`}
+                >
+                  {p.preview.kind === "image" && (
+                    <div className="relative aspect-[16/10] overflow-hidden border border-[rgba(246,244,238,0.1)]">
+                      <Image
+                        src={p.preview.src}
+                        alt={p.preview.alt}
+                        fill
+                        sizes="(min-width: 768px) 320px, 100vw"
+                        className="object-cover object-top"
+                      />
+                    </div>
+                  )}
+                  <div>
+                    <p className="text-sm md:text-base text-[rgba(246,244,238,0.7)] leading-relaxed max-w-xl">
+                      {p.summary}
+                    </p>
+                    <ul className="flex flex-wrap gap-1.5 mt-4">
+                      {p.stack.map((s) => (
+                        <li
+                          key={s}
+                          className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-[rgba(246,244,238,0.6)] border border-[rgba(246,244,238,0.15)] px-2 py-1"
+                        >
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                    <Link
+                      href={`/work/${p.slug}`}
+                      tabIndex={isOpen ? 0 : -1}
+                      className="inline-flex items-center gap-2 mt-5 font-mono text-[11px] uppercase tracking-[0.16em] text-amber hover:text-bg transition-colors duration-200"
+                    >
+                      Read the case study <span aria-hidden="true">→</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
