@@ -5,9 +5,10 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { projects, type Project } from "@/lib/projects";
 
-// Live products get the full card; local tools get a compact row underneath
-const featured = projects.filter((p) => p.status === "Live");
-const tools = projects.filter((p) => p.status !== "Live");
+// Live products and anything marked featured get the full card; other local tools get a compact row underneath
+const isFeatured = (p: Project) => p.status === "Live" || p.featured === true;
+const featured = projects.filter(isFeatured);
+const tools = projects.filter((p) => !isFeatured(p));
 
 const IFRAME_W = 1440;
 const IFRAME_H = 900;
@@ -25,8 +26,9 @@ export default function WorkSection() {
               My work<span className="amber-text">.</span>
             </h2>
             <p className="text-[rgba(246,244,238,0.55)] text-base md:text-lg leading-relaxed max-w-xl mt-6">
-              Two live products, built with AI end to end. Each has a write-up:
-              what I built, how the pieces connect, and what broke along the way.
+              Start with Sift, the tool behind my lead generation work, then the two live
+              products I built end to end with AI. Each has a write-up: what I built, how
+              the pieces connect, and what broke along the way.
             </p>
           </div>
         </div>
