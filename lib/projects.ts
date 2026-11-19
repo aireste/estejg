@@ -34,6 +34,7 @@ export type Project = {
   address: string; // shown in the card's browser bar
   links: { label: string; href: string }[];
   visit?: string; // live URL for the card's "Visit site" button; omit for local tools
+  featured?: boolean; // the lead tool: first in the tools list, shown with a thumbnail
   caseStudy?: CaseStudy; // undefined = has its own hand-built page (SPCTR)
 };
 
@@ -141,6 +142,90 @@ export const projects: Project[] = [
         {
           what: "On the phone, the details sheet opened offscreen after scrolling.",
           lesson: "A leftover transform from a fade-in animation changed what 'fixed' anchors to. Test the deployed site, scrolled down, on a real device.",
+        },
+      ],
+    },
+  },
+  {
+    slug: "sift",
+    name: "Sift",
+    tagline: "From a one-line request to a verified list of decision-makers.",
+    summary:
+      "A tool that turns a plain request, like owner-run home-service companies near Nashville, into a list of owners with an email that has been checked. Every paid step stops for a person's yes, and it can only create drafts, never send. Built to do one job: zero to a verified list.",
+    year: "2026",
+    status: "Local tool",
+    featured: true,
+    role: "Solo — design + engineering",
+    stack: ["Python (stdlib)", "SQLite", "Vanilla JS", "Outscraper", "Apollo", "ZeroBounce", "Instantly"],
+    ai: ["A person at every gate", "Spend caps", "Agentic coding", "Draft-only by design"],
+    preview: {
+      kind: "image",
+      src: "/work/sift.jpg",
+      alt: "Sift's run screen on practice data: the Find, Gates and Size steps done, and a sheet asking for a yes before looking up owners, showing 166 credits and 371 companies",
+    },
+    address: "Runs on my laptop",
+    links: [],
+    caseStudy: {
+      heroDemo: "sift",
+      problem: {
+        heading: "A few hundred names shouldn't need four subscriptions.",
+        body: [
+          "Getting a clean list of businesses to email usually means a data tool, an email verifier, a sequencing tool and a CRM, stitched together by hand. For a small business or one person, that is a lot of software for a list of a few hundred names.",
+          "I wanted one tunnel-vision tool. Type the request in plain words, get back owners and decision-makers with an email that has been checked, and stop there. No CRM, no dashboard of everything.",
+        ],
+      },
+      build: {
+        heading: "Five steps, and every paid one asks first.",
+        body: [
+          "Sift finds businesses on Google Maps, drops the ones that don't fit (chains, wrong city, wrong size), looks up the owner or the right decision-maker, checks every email, and saves the verified ones to an unsent draft in the email tool.",
+          "A person stays in charge. Every step that costs money stops and shows the exact count and cost before anything is spent. There is a spend cap. It can only create drafts and has no way to send or switch anything on. Leads it is unsure about are flagged, with the reason in plain words.",
+          "Real runs so far, with client names withheld: 239 home-service businesses searched, 38 owners with a verified email, $1.42 in data costs. In a different run, 171 professional-services companies searched and 40 decision-makers verified for $1.27.",
+          "Where it stands: it has built verified lists for a few local businesses. The outreach those lists feed has only just started, so there are no replies or meetings to report yet.",
+        ],
+      },
+      architecture: {
+        heading: "A pipeline with a person at every gate.",
+        intro:
+          "The vendors do the finding and the checking. Sift's job is to run them in order, cap the spend and make a human say yes.",
+        flow: [
+          { label: "A plain request", detail: "Owner-run home-service companies near Nashville" },
+          { label: "Find and filter", detail: "Google Maps results, minus chains, duplicates and the wrong places" },
+          { label: "Owners", detail: "Apollo for the person, and a site scan as a backup when nobody is listed" },
+          { label: "Verify", detail: "Every email is checked, and only valid ones count" },
+          { label: "Review", detail: "A person approves or rejects each lead" },
+          { label: "Draft", detail: "Verified leads saved to an unsent draft; a person sends" },
+        ],
+      },
+      concepts: [
+        {
+          name: "Every spend asks first",
+          body: "Each paid step shows its exact count and cost and waits for a yes, with a hard cap behind it. A whole list costs a few dollars, and nothing is spent without me seeing it.",
+        },
+        {
+          name: "Draft-only by design",
+          body: "The part that loads leads into the email tool has no way to send, pause or switch on a campaign. A test fails if that code ever appears.",
+        },
+        {
+          name: "Say what it can't do",
+          body: "It finds businesses, not households, and decision-makers at larger companies are harder to find. The run records say how many companies had nobody listed.",
+        },
+      ],
+      broke: [
+        {
+          what: "My first Atlanta search aimed at the wrong audience.",
+          lesson: "I had typed a guess about who buys. The plan screen showed it before I spent anything, and I rewrote the request.",
+        },
+        {
+          what: "Most companies had nobody listed.",
+          lesson: "In one run, 86 of 111 companies had no contact in the data tool. I added a second pass that reads each company's own site, builds likely addresses and verifies them. It added 17 verified contacts for about 72 cents.",
+        },
+        {
+          what: "My first site reader treated page headings as people.",
+          lesson: "It returned names like 'Top Software Developers.' I caught it by reading the list before paying, then rebuilt the reader to need a real name and a short job title together, with tests for the bad cases.",
+        },
+        {
+          what: "A 20-minute search looked stuck.",
+          lesson: "It was queuing at the vendor. The run screen now says 'last activity' and that a long wait is not an error.",
         },
       ],
     },
@@ -293,89 +378,6 @@ export const projects: Project[] = [
         {
           what: "I tried an AI classifier for 'is this the same person?' and it was a coin flip.",
           lesson: "With only numbers allowed in (no names or emails), neither it nor my own scoring could tell two people from one. I wrote the result down and didn't ship it. It's the right tool in HedgePredict, where the inputs are numbers.",
-        },
-      ],
-    },
-  },
-  {
-    slug: "sift",
-    name: "Sift",
-    tagline: "From a one-line request to a verified list of decision-makers.",
-    summary:
-      "A tool that turns a plain request, like owner-run home-service companies near Nashville, into a list of owners with an email that has been checked. Every paid step stops for a person's yes, and it can only create drafts, never send. Built to do one job: zero to a verified list.",
-    year: "2026",
-    status: "Local tool",
-    role: "Solo — design + engineering",
-    stack: ["Python (stdlib)", "SQLite", "Vanilla JS", "Outscraper", "Apollo", "ZeroBounce", "Instantly"],
-    ai: ["A person at every gate", "Spend caps", "Agentic coding", "Draft-only by design"],
-    preview: {
-      kind: "image",
-      src: "/work/sift.jpg",
-      alt: "Sift's run screen on practice data: the Find, Gates and Size steps done, and a sheet asking for a yes before looking up owners, showing 166 credits and 371 companies",
-    },
-    address: "Runs on my laptop",
-    links: [],
-    caseStudy: {
-      heroDemo: "sift",
-      problem: {
-        heading: "A few hundred names shouldn't need four subscriptions.",
-        body: [
-          "Getting a clean list of businesses to email usually means a data tool, an email verifier, a sequencing tool and a CRM, stitched together by hand. For a small business or one person, that is a lot of software for a list of a few hundred names.",
-          "I wanted one tunnel-vision tool. Type the request in plain words, get back owners and decision-makers with an email that has been checked, and stop there. No CRM, no dashboard of everything.",
-        ],
-      },
-      build: {
-        heading: "Five steps, and every paid one asks first.",
-        body: [
-          "Sift finds businesses on Google Maps, drops the ones that don't fit (chains, wrong city, wrong size), looks up the owner or the right decision-maker, checks every email, and saves the verified ones to an unsent draft in the email tool.",
-          "A person stays in charge. Every step that costs money stops and shows the exact count and cost before anything is spent. There is a spend cap. It can only create drafts and has no way to send or switch anything on. Leads it is unsure about are flagged, with the reason in plain words.",
-          "Real runs so far, with client names withheld: 239 home-service businesses searched, 38 owners with a verified email, $1.42 in data costs. In a different run, 171 professional-services companies searched and 40 decision-makers verified for $1.27.",
-          "Where it stands: it has built verified lists for a few local businesses. The outreach those lists feed has only just started, so there are no replies or meetings to report yet.",
-        ],
-      },
-      architecture: {
-        heading: "A pipeline with a person at every gate.",
-        intro:
-          "The vendors do the finding and the checking. Sift's job is to run them in order, cap the spend and make a human say yes.",
-        flow: [
-          { label: "A plain request", detail: "Owner-run home-service companies near Nashville" },
-          { label: "Find and filter", detail: "Google Maps results, minus chains, duplicates and the wrong places" },
-          { label: "Owners", detail: "Apollo for the person, and a site scan as a backup when nobody is listed" },
-          { label: "Verify", detail: "Every email is checked, and only valid ones count" },
-          { label: "Review", detail: "A person approves or rejects each lead" },
-          { label: "Draft", detail: "Verified leads saved to an unsent draft; a person sends" },
-        ],
-      },
-      concepts: [
-        {
-          name: "Every spend asks first",
-          body: "Each paid step shows its exact count and cost and waits for a yes, with a hard cap behind it. A whole list costs a few dollars, and nothing is spent without me seeing it.",
-        },
-        {
-          name: "Draft-only by design",
-          body: "The part that loads leads into the email tool has no way to send, pause or switch on a campaign. A test fails if that code ever appears.",
-        },
-        {
-          name: "Say what it can't do",
-          body: "It finds businesses, not households, and decision-makers at larger companies are harder to find. The run records say how many companies had nobody listed.",
-        },
-      ],
-      broke: [
-        {
-          what: "My first Atlanta search aimed at the wrong audience.",
-          lesson: "I had typed a guess about who buys. The plan screen showed it before I spent anything, and I rewrote the request.",
-        },
-        {
-          what: "Most companies had nobody listed.",
-          lesson: "In one run, 86 of 111 companies had no contact in the data tool. I added a second pass that reads each company's own site, builds likely addresses and verifies them. It added 17 verified contacts for about 72 cents.",
-        },
-        {
-          what: "My first site reader treated page headings as people.",
-          lesson: "It returned names like 'Top Software Developers.' I caught it by reading the list before paying, then rebuilt the reader to need a real name and a short job title together, with tests for the bad cases.",
-        },
-        {
-          what: "A 20-minute search looked stuck.",
-          lesson: "It was queuing at the vendor. The run screen now says 'last activity' and that a long wait is not an error.",
         },
       ],
     },

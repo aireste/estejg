@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { projects, type Project } from "@/lib/projects";
 
-// Live products get the full card; local tools get a compact row underneath
+// Live products get the full card; local tools get a compact row underneath (the featured tool leads, with a thumbnail)
 const featured = projects.filter((p) => p.status === "Live");
 const tools = projects.filter((p) => p.status !== "Live");
 
@@ -41,26 +41,7 @@ export default function WorkSection() {
         <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-[rgba(246,244,238,0.5)] mt-16 md:mt-20 mb-5">
           Tools I built for my own workflow
         </h3>
-        <ul className="border-b border-[rgba(246,244,238,0.08)]">
-          {tools.map((p) => (
-            <li key={p.slug} className="border-t border-[rgba(246,244,238,0.08)]">
-              <Link
-                href={`/work/${p.slug}`}
-                className="group grid grid-cols-[1fr_auto] md:grid-cols-[14rem_1fr_auto] items-baseline gap-x-8 gap-y-1 py-5"
-              >
-                <span className="font-display font-medium text-lg md:text-xl tracking-tight text-bg group-hover:text-amber transition-colors duration-200">
-                  {p.name}
-                </span>
-                <span className="col-span-2 md:col-span-1 row-start-2 md:row-start-auto text-sm md:text-base text-[rgba(246,244,238,0.55)]">
-                  {p.tagline}
-                </span>
-                <span className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-[rgba(246,244,238,0.55)] group-hover:text-amber transition-colors duration-200">
-                  Case study <span aria-hidden="true">→</span>
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <ToolsList tools={tools} />
       </div>
     </section>
   );
@@ -244,5 +225,115 @@ function ProjectCard({ project: p, num }: { project: Project; num: string }) {
         </div>
       </div>
     </article>
+  );
+}
+
+// The tools list: plain text rows. Click a row and it opens downward to show a picture, a short summary and a
+// link to the case study; click again (or open another) and it closes. One open at a time.
+function ToolsList({ tools }: { tools: Project[] }) {
+  const [open, setOpen] = useState<string | null>(null);
+
+  return (
+    <ul className="border-b border-[rgba(246,244,238,0.08)]">
+      {tools.map((p) => {
+        const isOpen = open === p.slug;
+        const panelId = `tool-${p.slug}-panel`;
+        return (
+          <li key={p.slug} className="border-t border-[rgba(246,244,238,0.08)]">
+            <button
+              type="button"
+              onClick={() => setOpen(isOpen ? null : p.slug)}
+              aria-expanded={isOpen}
+              aria-controls={panelId}
+              className="group grid w-full grid-cols-[1fr_auto] md:grid-cols-[14rem_1fr_auto] items-baseline gap-x-4 md:gap-x-8 gap-y-1 py-5 text-left"
+            >
+              <span
+                className={`font-display font-medium text-lg md:text-xl tracking-tight transition-colors duration-200 ${
+                  isOpen ? "text-amber" : "text-bg group-hover:text-amber"
+                }`}
+              >
+                {p.name}
+                {p.featured && (
+                  <span className="ml-3 align-middle font-mono text-[10px] uppercase tracking-[0.16em] text-amber">
+                    Lead tool
+                  </span>
+                )}
+              </span>
+              <span className="col-span-2 md:col-span-1 row-start-2 md:row-start-auto text-sm md:text-base text-[rgba(246,244,238,0.55)]">
+                {p.tagline}
+              </span>
+              <span
+                className={`font-mono text-[10.5px] uppercase tracking-[0.16em] flex items-center gap-2.5 transition-colors duration-200 ${
+                  isOpen ? "text-amber" : "text-[rgba(246,244,238,0.55)] group-hover:text-bg"
+                }`}
+              >
+                {isOpen ? "Close" : "Details"}
+                <span
+                  aria-hidden="true"
+                  className={`relative w-3 h-3 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+                    isOpen ? "rotate-45" : ""
+                  }`}
+                >
+                  <span className="absolute top-1/2 left-0 w-3 h-px bg-current" />
+                  <span className="absolute left-1/2 top-0 h-3 w-px bg-current" />
+                </span>
+              </span>
+            </button>
+
+            {/* grid-rows 0fr to 1fr animates the panel to its content height */}
+            <div
+              id={panelId}
+              role="region"
+              aria-label={`${p.name} details`}
+              className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+                isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+              }`}
+            >
+              <div className="overflow-hidden">
+                <div
+                  className={`grid gap-6 md:grid-cols-[20rem_1fr] items-start pb-7 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+                    isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
+                  }`}
+                >
+                  {p.preview.kind === "image" && (
+                    <div className="relative aspect-[16/10] overflow-hidden border border-[rgba(246,244,238,0.1)]">
+                      <Image
+                        src={p.preview.src}
+                        alt={p.preview.alt}
+                        fill
+                        sizes="(min-width: 768px) 320px, 100vw"
+                        className="object-cover object-top"
+                      />
+                    </div>
+                  )}
+                  <div>
+                    <p className="text-sm md:text-base text-[rgba(246,244,238,0.7)] leading-relaxed max-w-xl">
+                      {p.summary}
+                    </p>
+                    <ul className="flex flex-wrap gap-1.5 mt-4">
+                      {p.stack.map((s) => (
+                        <li
+                          key={s}
+                          className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-[rgba(246,244,238,0.6)] border border-[rgba(246,244,238,0.15)] px-2 py-1"
+                        >
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                    <Link
+                      href={`/work/${p.slug}`}
+                      tabIndex={isOpen ? 0 : -1}
+                      className="inline-flex items-center gap-2 mt-5 font-mono text-[11px] uppercase tracking-[0.16em] text-amber hover:text-bg transition-colors duration-200"
+                    >
+                      Read the case study <span aria-hidden="true">→</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
