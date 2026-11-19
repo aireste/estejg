@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { projects, type Project } from "@/lib/projects";
 
@@ -41,57 +42,7 @@ export default function WorkSection() {
         <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-[rgba(246,244,238,0.5)] mt-16 md:mt-20 mb-5">
           Tools I built for my own workflow
         </h3>
-        <ul className="border-b border-[rgba(246,244,238,0.08)]">
-          {tools.map((p) =>
-            p.featured && p.preview.kind === "image" ? (
-              <li key={p.slug} className="border-t border-[rgba(246,244,238,0.08)]">
-                <Link
-                  href={`/work/${p.slug}`}
-                  className="group grid md:grid-cols-[18rem_1fr] items-center gap-x-8 gap-y-4 py-7"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden border border-[rgba(246,244,238,0.1)] group-hover:border-[rgba(246,244,238,0.3)] transition-colors duration-300">
-                    <Image
-                      src={p.preview.src}
-                      alt={p.preview.alt}
-                      fill
-                      sizes="(min-width: 768px) 288px, 100vw"
-                      className="object-cover object-top"
-                    />
-                  </div>
-                  <div>
-                    <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-amber">
-                      Lead tool · behind SPCTR&apos;s lead generation
-                    </span>
-                    <h4 className="font-display font-bold text-2xl md:text-3xl tracking-tight text-bg mt-2 group-hover:text-amber transition-colors duration-200">
-                      {p.name}
-                    </h4>
-                    <p className="text-sm md:text-base text-[rgba(246,244,238,0.65)] mt-2 max-w-xl">{p.tagline}</p>
-                    <span className="inline-block font-mono text-[10.5px] uppercase tracking-[0.16em] text-[rgba(246,244,238,0.55)] group-hover:text-amber transition-colors duration-200 mt-4">
-                      Case study <span aria-hidden="true">→</span>
-                    </span>
-                  </div>
-                </Link>
-              </li>
-            ) : (
-            <li key={p.slug} className="border-t border-[rgba(246,244,238,0.08)]">
-              <Link
-                href={`/work/${p.slug}`}
-                className="group grid grid-cols-[1fr_auto] md:grid-cols-[14rem_1fr_auto] items-baseline gap-x-8 gap-y-1 py-5"
-              >
-                <span className="font-display font-medium text-lg md:text-xl tracking-tight text-bg group-hover:text-amber transition-colors duration-200">
-                  {p.name}
-                </span>
-                <span className="col-span-2 md:col-span-1 row-start-2 md:row-start-auto text-sm md:text-base text-[rgba(246,244,238,0.55)]">
-                  {p.tagline}
-                </span>
-                <span className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-[rgba(246,244,238,0.55)] group-hover:text-amber transition-colors duration-200">
-                  Case study <span aria-hidden="true">→</span>
-                </span>
-              </Link>
-            </li>
-            )
-          )}
-        </ul>
+        <ToolsList tools={tools} />
       </div>
     </section>
   );
@@ -275,5 +226,136 @@ function ProjectCard({ project: p, num }: { project: Project; num: string }) {
         </div>
       </div>
     </article>
+  );
+}
+
+// The tools list: plain rows. On a mouse, hovering (or tabbing to) a row shows that tool's picture next to
+// the cursor; leaving hides it. On touch screens, where there is no hover, each row carries a small thumbnail.
+function ToolsList({ tools }: { tools: Project[] }) {
+  const [active, setActive] = useState<string | null>(null);
+  const [canHover, setCanHover] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const target = useRef({ x: 0, y: 0 });
+  const cur = useRef({ x: 0, y: 0 });
+  const reduce = useRef(false);
+  const BOX_W = 352;
+  const BOX_H = 220;
+
+  useEffect(() => {
+    setMounted(true);
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const onChange = () => setCanHover(mq.matches);
+    onChange();
+    mq.addEventListener("change", onChange);
+    reduce.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  // ease the picture toward the cursor, only while something is hovered (transform only, so it stays smooth)
+  useEffect(() => {
+    if (!active || !canHover) return;
+    let id = 0;
+    const tick = () => {
+      const k = reduce.current ? 1 : 0.2;
+      cur.current.x += (target.current.x - cur.current.x) * k;
+      cur.current.y += (target.current.y - cur.current.y) * k;
+      if (boxRef.current) boxRef.current.style.transform = `translate3d(${cur.current.x}px, ${cur.current.y}px, 0)`;
+      id = requestAnimationFrame(tick);
+    };
+    id = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(id);
+  }, [active, canHover]);
+
+  const place = (x: number, y: number, snap: boolean) => {
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+    const px = Math.min(x + 28, W - BOX_W - 16);
+    const py = Math.max(16, Math.min(y - BOX_H / 2, H - BOX_H - 16));
+    target.current = { x: px, y: py };
+    if (snap) cur.current = { x: px, y: py };
+  };
+
+  const show = (slug: string, e: React.MouseEvent | React.FocusEvent) => {
+    if (!canHover) return;
+    if ("clientX" in e) place(e.clientX, e.clientY, active === null);
+    else {
+      const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
+      place(r.right - BOX_W - 40, r.top + r.height / 2, true);
+    }
+    setActive(slug);
+  };
+
+  const withImage = tools.filter((p) => p.preview.kind === "image");
+
+  return (
+    <>
+      <ul
+        className="border-b border-[rgba(246,244,238,0.08)]"
+        onMouseLeave={() => setActive(null)}
+        onMouseMove={(e) => active && place(e.clientX, e.clientY, false)}
+      >
+        {tools.map((p) => (
+          <li key={p.slug} className="border-t border-[rgba(246,244,238,0.08)]">
+            <Link
+              href={`/work/${p.slug}`}
+              onMouseEnter={(e) => show(p.slug, e)}
+              onFocus={(e) => show(p.slug, e)}
+              onBlur={() => setActive(null)}
+              className="group grid grid-cols-[1fr_auto] md:grid-cols-[14rem_1fr_auto] [@media(hover:none)]:max-md:grid-cols-[5rem_1fr_auto] items-baseline gap-x-4 md:gap-x-8 gap-y-1 py-5"
+            >
+              {p.preview.kind === "image" && (
+                <span className="relative hidden [@media(hover:none)]:max-md:block w-20 h-12 overflow-hidden border border-[rgba(246,244,238,0.1)] row-span-2 self-center">
+                  <Image src={p.preview.src} alt="" fill sizes="80px" className="object-cover object-top" />
+                </span>
+              )}
+              <span className="font-display font-medium text-lg md:text-xl tracking-tight text-bg group-hover:text-amber transition-colors duration-200">
+                {p.name}
+                {p.featured && (
+                  <span className="ml-3 align-middle font-mono text-[10px] uppercase tracking-[0.16em] text-amber">
+                    Lead tool
+                  </span>
+                )}
+              </span>
+              <span className="col-span-2 md:col-span-1 row-start-2 md:row-start-auto text-sm md:text-base text-[rgba(246,244,238,0.55)]">
+                {p.tagline}
+              </span>
+              <span className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-[rgba(246,244,238,0.55)] group-hover:text-amber transition-colors duration-200">
+                Case study <span aria-hidden="true">→</span>
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      {mounted &&
+        canHover &&
+        createPortal(
+          <div
+            ref={boxRef}
+            aria-hidden="true"
+            className={`pointer-events-none fixed left-0 top-0 z-40 border border-[rgba(246,244,238,0.18)] bg-[#141414] shadow-2xl overflow-hidden transition-opacity duration-200 motion-reduce:transition-none ${
+              active ? "opacity-100" : "opacity-0"
+            }`}
+            style={{ width: BOX_W, height: BOX_H }}
+          >
+            {withImage.map((p) =>
+              p.preview.kind === "image" ? (
+                <Image
+                  key={p.slug}
+                  src={p.preview.src}
+                  alt=""
+                  fill
+                  sizes="352px"
+                  className={`object-cover object-top transition-opacity duration-150 motion-reduce:transition-none ${
+                    active === p.slug ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              ) : null,
+            )}
+          </div>,
+          document.body,
+        )}
+    </>
   );
 }
